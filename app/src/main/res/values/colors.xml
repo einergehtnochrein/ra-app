@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ra_theme_light_primary">#005197</color>
+    <color name="ra_theme_light_onPrimary">#ffffff</color>
+    <color name="ra_theme_light_secondary">#475f84</color>
+    <color name="ra_theme_light_onSecondary">#ffffff</color>
+    <color name="ra_theme_light_tertiary">#763192</color>
+    <color name="ra_theme_light_onTertiary">#ffffff</color>
+    <color name="ra_theme_light_primaryContainer">#1976d2</color>
+    <color name="ra_theme_light_onPrimaryContainer">#ffffff</color>
+    <color name="ra_theme_light_secondaryContainer">#c3d9ff</color>
+    <color name="ra_theme_light_onSecondaryContainer">#294265</color>
+    <color name="ra_theme_light_tertiaryContainer">#9f58ba</color>
+    <color name="ra_theme_light_onTertiaryContainer">#ffffff</color>
+
+    <color name="ra_theme_light_surfaceDim">#d8dae2</color>
+    <color name="ra_theme_light_surface">#f9f9ff</color>
+    <color name="ra_theme_light_surfaceBright">#f9f9ff</color>
+    <color name="ra_theme_light_surfaceContainerLowest">#ffffff</color>
+    <color name="ra_theme_light_surfaceContainerLow">#f2f3fc</color>
+    <color name="ra_theme_light_surfaceContainer">#ecedf6</color>
+    <color name="ra_theme_light_surfaceContainerHigh">#e6e8f0</color>
+    <color name="ra_theme_light_surfaceContainerHighest">#e0e2ea</color>
+    <color name="ra_theme_light_onSurface">#181c21</color>
+    <color name="ra_theme_light_onSurfaceVariant">#414752</color>
+    <color name="ra_theme_light_outline">#717783</color>
+    <color name="ra_theme_light_outlineVariant">#c1c6d4</color>
+
+    <color name="ra_theme_light_error">#ba1a1a</color>
+    <color name="ra_theme_light_onError">#ffffff</color>
+    <color name="ra_theme_light_errorContainer">#ffdad6</color>
+    <color name="ra_theme_light_onErrorContainer">#410002</color>
+    <color name="ra_theme_light_surfaceInverse">#2d3037</color>
+    <color name="ra_theme_light_onSurfaceInverse">#eff0f9</color>
+    <color name="ra_theme_light_primaryInverse">#a5c8ff</color>
+
+
+    <color name="ra_theme_dark_primary">#a5c8ff</color>
+    <color name="ra_theme_dark_onPrimary">#00315f</color>
+    <color name="ra_theme_dark_secondary">#afc8f1</color>
+    <color name="ra_theme_dark_onSecondary">#163153</color>
+    <color name="ra_theme_dark_tertiary">#edb1ff</color>
+    <color name="ra_theme_dark_onTertiary">#52046e</color>
+    <color name="ra_theme_dark_primaryContainer">#006dc7</color>
+    <color name="ra_theme_dark_onPrimaryContainer">#ffffff</color>
+    <color name="ra_theme_dark_secondaryContainer">#274062</color>
+    <color name="ra_theme_dark_onSecondaryContainer">#bdd5ff</color>
+    <color name="ra_theme_dark_tertiaryContainer">#954fb0</color>
+    <color name="ra_theme_dark_onTertiaryContainer">#ffffff</color>
+
+    <color name="ra_theme_dark_surfaceDim">#101319</color>
+    <color name="ra_theme_dark_surface">#101319</color>
+    <color name="ra_theme_dark_surfaceBright">#363940</color>
+    <color name="ra_theme_dark_surfaceContainerLowest">#0b0e14</color>
+    <color name="ra_theme_dark_surfaceContainerLow">#181c21</color>
+    <color name="ra_theme_dark_surfaceContainer">#1c2026</color>
+    <color name="ra_theme_dark_surfaceContainerHigh">#272a30</color>
+    <color name="ra_theme_dark_surfaceContainerHighest">#32353b</color>
+    <color name="ra_theme_dark_onSurface">#e0e2ea</color>
+    <color name="ra_theme_dark_onSurfaceVariant">#c1c6d4</color>
+    <color name="ra_theme_dark_outline">#8b919e</color>
+    <color name="ra_theme_dark_outlineVariant">#414752</color>
+
+    <color name="ra_theme_dark_error">#ffb4ab</color>
+    <color name="ra_theme_dark_onError">#690005</color>
+    <color name="ra_theme_dark_errorContainer">#93000a</color>
+    <color name="ra_theme_dark_onErrorContainer">#ffdad6</color>
+    <color name="ra_theme_dark_surfaceInverse">#e0e2ea</color>
+    <color name="ra_theme_dark_onSurfaceInverse">#2d3037</color>
+    <color name="ra_theme_dark_primaryInverse">#005faf</color>
+</resources>

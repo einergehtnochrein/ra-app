@@ -1,0 +1,241 @@
+<resources>
+    <string name="app_name">Ra</string>
+
+    <string name="title_activity_settings">Einstellungen</string>
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_ephemupdate">Aktuelle Ephemeriden laden</string>
+    <string name="action_firmware_update">Neue Ra-Firmware laden</string>
+    <string name="action_about">Über&#8230;</string>
+
+    <string name="action_dashboard">Steuerung</string>
+    <string name="action_map">Karte</string>
+    <string name="action_heard_list">Empfangsliste</string>
+
+    <string name="fragment_dashboard_loader_mode">BOOTLOADER</string>
+    <string name="fragment_dashboard_searching">SUCHE</string>
+    <string name="fragment_dashboard_mode_list">Liste</string>
+    <string name="fragment_dashboard_mode_manual">Manuell</string>
+    <string name="fragment_dashboard_mode_spectrum">Scanner</string>
+    <string name="fragment_dashboard_debug_audio_label">Debug Audio:</string>
+    <string name="fragment_dashboard_sonde_type">Decoder:</string>
+    <string name="fragment_dashboard_disconnected">--AUS--</string>
+    <string name="fragment_dashboard_scanning">SCANNER</string>
+    <string name="fragment_dashboard_battery">Batterie:</string>
+    <string name="fragment_dashboard_dialog_smeter_style_title">S-Meter Darstellung</string>
+    <string name="fragment_dashboard_dialog_smeter_style_cancel">Abbruch</string>
+    <string name="fragment_dashboard_monitor_state_content_description">Zeigt den Status der MonitorFunktion</string>
+
+    <string name="fragment_dashboard_enter_frequency_hint">Empfangsfrequenz in MHz</string>
+
+    <string name="fragment_dashboard_monitor_description">Mithörfunktion ein/aus</string>
+
+    <string-array name="debug_audio_channel">
+        <item>Normal</item>
+        <item>Debug1</item>
+        <item>Debug2</item>
+        <item>Debug3</item>
+    </string-array>
+
+    <string-array name="sonde_decoder">
+        <item>RS41/RS92</item>
+        <item>DFM06/09</item>
+        <item>C34/C50</item>
+        <item>iMet-4</item>
+        <item>M10/M20</item>
+        <item>Notfunk-Bake</item>
+        <item>Meisei iMS-100</item>
+        <item>Pilotsonde</item>
+        <item>Jinyang RSG-20A</item>
+        <item>iMet-54</item>
+        <item>MP3-H1</item>
+        <item>Asien(1)</item>
+        <item>Vikram PS-B3</item>
+        <item>Windsond S1</item>
+        <item>Meteosis MTS-01</item>
+        <item>Lockheed LMS-6</item>
+    </string-array>
+
+    <string name="fragment_map_button_predict2">tawhiri\nVorhersage</string>
+    <string name="fragment_map_button_self">GPS</string>
+    <string name="fragment_map_action_debug_grid">Gitter ein/aus (Debug)</string>
+    <string name="fragment_map_action_toggle_maps">Karten-Layer auswählen</string>
+    <string name="fragment_map_action_jump_my_position">Springe zu eigener Position</string>
+    <string name="fragment_map_landed">Gelandet</string>
+    <string name="fragment_map_dialog_burst_altitude_title">Erwartete Gipfelhöhe eingeben</string>
+    <string name="fragment_map_dialog_burst_altitude_ok">Ok</string>
+    <string name="fragment_map_dialog_burst_altitude_cancel">Abbruch</string>
+    <string name="fragment_map_dialog_landing_time_style_title">Anzeige Landezeitpunkt</string>
+    <string name="fragment_map_dialog_landing_time_style_cancel">Abbruch</string>
+    <string name="fragment_map_fab_goto_my_position_content_description">Zur eigenen Position</string>
+    <string name="fragment_map_fab_goto_sonde_content_description">Zur Sonde</string>
+
+    <string name="fragment_heard_empty_description">Empfangsliste ist leer</string>
+    <string name="fragment_heard_item_image_description">Abbildung Sonde</string>
+
+    <string name="fragment_heard_label_humidity">RH: </string>
+    <string name="fragment_heard_label_dew_point"><![CDATA[T<sub><small>D</small></sub>: ]]></string>
+    <string name="fragment_heard_label_beacon_hex_id">15 Hex ID:</string>
+    <string name="fragment_heard_label_beacon_mode_test">TEST</string>
+    <string name="fragment_heard_label_beacon_mode_emergency">NOTRUF</string>
+    <string name="fragment_heard_label_temperature_cpu"><![CDATA[T<sub><small>CPU</small></sub>: ]]></string>
+    <string name="fragment_heard_label_temperature_u"><![CDATA[T<sub><small>U</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_c50_heating">HEIZUNG</string>
+    <string name="fragment_heard_label_c50_tref"><![CDATA[T<sub><small>ref</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_tu"><![CDATA[T<sub><small>Hum</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_tch"><![CDATA[T<sub><small>Ch</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_temperatureO3"><![CDATA[T<sub><small>O3air</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_currentO3"><![CDATA[I<sub><small>O3</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_voltage_battery"><![CDATA[V<sub><small>BAT</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_voltage_rf_power"><![CDATA[V<sub><small>RF</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_state">State:</string>
+    <string name="fragment_heard_label_c50_firmware_version">FW:</string>
+    <string name="fragment_heard_label_c50_gps_interferer">GPS IF:</string>
+    <string name="fragment_heard_label_c50_serial_sensor">Sensor: #</string>
+    <string name="fragment_heard_label_cf06_pdop">PDOP=%.2f</string>
+    <string name="fragment_heard_label_m20_board_temperature"><![CDATA[T<sub><small>PCB</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_rs41_gps_jammer"><![CDATA[GPS<sub><small>jam</small></sub>: ]]></string>
+    <string name="fragment_heard_label_rs41_kill_countdown">Kill in</string>
+    <string name="fragment_heard_label_rs41_kill_extra">Flugzeit-Limit:</string>
+    <string name="fragment_heard_label_rs41_gpsacc">sAcc:</string>
+    <string name="fragment_heard_label_rs41_burst_kill_frames">Burstkill:</string>
+    <string name="fragment_heard_label_rs41_temperature_tx"><![CDATA[T<sub><small>TX</small></sub>: ]]></string>
+    <string name="fragment_heard_label_rs41_temperature_ref"><![CDATA[T<sub><small>ref</small></sub>: ]]></string>
+    <string name="fragment_heard_label_rs41_xdata_num">XDATA-Instrument(e)</string>
+    <string name="fragment_heard_label_dfm_position_error">Fehler:</string>
+    <string name="fragment_heard_label_mrz_serial_sensor">Sensor: #</string>
+    <string name="fragment_heard_label_imet_sats">%1$d sats</string>
+    <string name="fragment_heard_label_imet_temperature_inner"><![CDATA[T<sub><small>I</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_imet_temperature_p"><![CDATA[T<sub><small>P</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_meisei_serial_pcb">PCB#=%s</string>
+    <string name="fragment_heard_label_meisei_serial_sensor_boom">Sensor#=%s</string>
+    <string name="fragment_heard_label_meisei_temperature_tx"><![CDATA[T<sub><small>TX</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_mts01_temperature_inner"><![CDATA[T<sub><small>innen</small></sub>=%1$.1f°C]]></string>
+
+    <string name="fragment_heard_ascending">Aufstieg</string>
+    <string name="fragment_heard_descending">Abstieg</string>
+
+    <string name="fragment_heard_list_action_delete_entry">Löschen</string>
+    <string name="fragment_heard_list_action_enable_raw_log">Rohdaten loggen</string>
+
+    <!-- Settings activity. Category names and strings for preference items -->
+    <string name="pref_category_bluetooth">Bluetooth</string>
+    <string name="pref_bluetooth_mac">MAC-Adressen des Sondengotts</string>
+    <string name="pref_bluetooth_connect_to_all_ra">Verehre alle Sondengötter</string>
+
+    <string name="pref_category_maps">Karten</string>
+    <string name="pref_maps_path">Suchpfad für Karten</string>
+    <string name="pref_maps_files">Aktivierte Karten</string>
+    <string name="pref_maps_theme_path">Suchpfad für Karten-Themes</string>
+    <string name="pref_maps_use_custom_theme">Eigenes Karten-Theme verwenden</string>
+    <string name="pref_maps_custom_theme_file">Theme für Karten-Darstellung (.xml)</string>
+    <string name="pref_maps_use_hill_shading">Schummerung</string>
+    <string name="pref_maps_hgt_path">Suchpfad für Höhenmodelle (.hgt)</string>
+    <string name="pref_maps_tiles_path">Suchpfad für Kacheln</string>
+    <string name="pref_maps_prediction_burst_altitude">Gipfelhöhe für Vorhersage</string>
+    <string name="pref_map_predict_landing_time_style">Anzeige Landezeitpunkt</string>
+    <string-array name="map_predict_landing_time_styles">
+        <item>Uhrzeit</item>
+        <item>Verbleibende Zeit</item>
+    </string-array>
+    <string-array name="map_predict_landing_time_styles_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="pref_map_online_format">URL-Format</string>
+    <string-array name="pref_map_online_format_names">
+        <item>Z/X/Y</item>
+        <item>Z/Y/X</item>
+        <item>/Z/X/Y (TMS)</item>
+        <item>/Z/Y/X (TMS)</item>
+    </string-array>
+    <string-array name="pref_map_online_format_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string name="pref_category_look">Darstellung</string>
+    <string name="pref_look_smeter_style">S-Meter</string>
+    <string-array name="smeter_styles">
+        <item>S-Einheiten</item>
+        <item>dBµV</item>
+        <item>dBm</item>
+    </string-array>
+    <string-array name="smeter_styles_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string name="pref_look_theme">Theme (erfordert Neustart)</string>
+    <string-array name="theme_names">
+        <item>Standard</item>
+        <item>Nachteule</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="pref_maps_files_default">
+        <item>germany.map</item>
+    </string-array>
+
+
+    <string name="pref_category_system">System</string>
+    <string name="pref_system_firmware_path">Suchpfad für Firmware</string>
+    <string name="pref_system_rinex_url">URL für RINEX-Download</string>
+    <string name="pref_system_predict_url">URL for Tawhiri Predictor</string>
+    <string name="pref_system_log_gpx">GPX-Tracks anlegen</string>
+    <string name="pref_system_log_gpx_path">Pfad für GPX-Tracks</string>
+    <string name="pref_system_log_gpx_persistence">Archivierungsdauer GPX-Daten</string>
+
+    <!-- Notifications -->
+    <string name="notify_map_not_found">Karte %s nicht gefunden</string>
+    <string name="notify_map_theme_not_found">Karten-Theme %s nicht gefunden, verwende OSMARENDER</string>
+    <string name="notify_location_service_not_found">Dienst zur Ortsbestimmung nicht gefunden</string>
+    <string name="notify_gps_service_denied">Keine GPS-Berechtigung!</string>
+    <string name="notify_gps_service_disabled">GPS-Dienst ist ausgeschaltet</string>
+    <string name="notify_ble_service_disabled">Bluetooth (BLE) ist ausgeschaltet</string>
+    <string name="notify_ephemeris_outdated">Ephemeriden veraltet (%d h)</string>
+
+    <!-- Ephemeris update service -->
+    <string name="ephemupdate_notification_title">Update der Ephemeriden</string>
+    <string name="ephemupdate_notification_action_fetch_rinex">RINEX-Daten holen</string>
+    <string name="ephemupdate_notification_action_uncompress_rinex">RINEX-Daten entpacken</string>
+    <string name="ephemupdate_notification_action_process_rinex">RINEX-Daten verarbeiten</string>
+    <string name="ephemupdate_notification_action_connect_device">Verbindungsaufbau&#8230;</string>
+    <string name="ephemupdate_notification_action_upload">Daten übertragen</string>
+    <string name="ephemupdate_notification_action_activate">Neue Ephemeriden aktivieren</string>
+    <string name="ephemupdate_notification_result_success">Update erfolgreich abgeschlossen!</string>
+    <string name="ephemupdate_notification_result_failure">Update fehlgeschlagen!</string>
+
+    <!-- Firmware update (dialog/service) -->
+    <string name="firmware_update_dialog_confirmation_title">Firmware-Update</string>
+    <string name="firmware_update_dialog_confirmation_message">Update jetzt durchführen?</string>
+    <string name="firmware_update_dialog_confirmation_button_positive">START</string>
+    <string name="firmware_update_dialog_confirmation_button_negative">Abbruch</string>
+    <string name="firmware_update_dialog_no_images">Keine Firmware (.hex) in</string>
+    <string name="firmware_update_notification_title">Update der Firmware</string>
+    <string name="firmware_update_notification_read_hex">Firmware-Hexdatei einlesen</string>
+    <string name="firmware_update_notification_action_connect_device">Verbindungsaufbau&#8230;</string>
+    <string name="firmware_update_notification_action_upload">Daten übertragen</string>
+    <string name="firmware_update_notification_action_activate">Neue Firmware aktivieren</string>
+    <string name="firmware_update_notification_result_success">Update erfolgreich abgeschlossen!</string>
+    <string name="firmware_update_notification_result_failure">Update fehlgeschlagen!</string>
+    <string name="firmware_update_response_hint">Freischaltcode Firmware-Löschung</string>
+
+    <!-- ABOUT dialog -->
+    <string name="dialog_about_title"> </string>
+    <string name="dialog_about_app_version">App version:</string>
+    <string name="dialog_about_firmware_version">Firmware version:</string>
+    <string name="dialog_about_power_script">Power Script:</string>
+    <string name="dialog_about_yes">ja</string>
+    <string name="dialog_about_no">nein</string>
+    <string name="dialog_about_unknown">unbekannt</string>
+    <string name="dialog_about_loader_version">Loader version:</string>
+
+    <!-- Misc -->
+    <string-array name="empty_array" />
+</resources>

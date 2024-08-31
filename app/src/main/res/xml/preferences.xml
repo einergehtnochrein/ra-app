@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:key="prefScreenMain"
+    >
+
+    <PreferenceCategory android:title="@string/pref_category_bluetooth" >
+        <MultiSelectListPreference
+            android:key="prefBluetoothMac"
+            android:title="@string/pref_bluetooth_mac"
+            android:defaultValue="@array/empty_array"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_maps" >
+        <EditTextPreference
+            android:key="prefMapPath"
+            android:title="@string/pref_maps_path"
+            />
+
+        <MultiSelectListPreference
+            android:key="prefMapFiles"
+            android:title="@string/pref_maps_files"
+            android:defaultValue="@array/pref_maps_files_default"
+            />
+
+        <SwitchPreferenceCompat
+            app:key="prefMapUseCustomTheme"
+            app:title="@string/pref_maps_use_custom_theme"
+            android:defaultValue="false"
+            />
+
+        <EditTextPreference
+            android:key="prefMapThemePath"
+            android:title="@string/pref_maps_theme_path"
+            android:dependency="prefMapUseCustomTheme"
+            />
+
+        <ListPreference
+            android:key="prefMapCustomThemeFile"
+            android:title="@string/pref_maps_custom_theme_file"
+            android:defaultValue=""
+            android:dependency="prefMapUseCustomTheme"
+            />
+
+        <SwitchPreferenceCompat
+            app:key="prefMapUseHillShading"
+            app:title="@string/pref_maps_use_hill_shading"
+            android:defaultValue="false"
+            />
+
+        <EditTextPreference
+            android:key="prefMapHgtPath"
+            android:title="@string/pref_maps_hgt_path"
+            android:dependency="prefMapUseHillShading"
+            />
+
+        <EditTextPreference
+            app:key="prefMapPredictBurstAltitude"
+            app:title="@string/pref_maps_prediction_burst_altitude"
+            android:defaultValue="30000"
+            />
+
+        <ListPreference
+            android:key="prefMapPredictLandingTimeStyle"
+            android:title="@string/pref_map_predict_landing_time_style"
+            android:entries="@array/map_predict_landing_time_styles"
+            android:entryValues="@array/map_predict_landing_time_styles_values"
+            android:defaultValue="0"
+            />
+
+        <Preference
+            android:title="Online Maps"
+            android:icon="@drawable/baseline_layers_24"
+            app:fragment="de.leckasemmel.sonde1.SettingsFragmentOnlineMaps"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_look" >
+        <ListPreference
+            android:key="prefLookSmeterStyle"
+            android:title="@string/pref_look_smeter_style"
+            android:entries="@array/smeter_styles"
+            android:entryValues="@array/smeter_styles_values"
+            android:defaultValue="0"
+            />
+
+        <ListPreference
+            android:key="prefLookTheme"
+            android:title="@string/pref_look_theme"
+            android:entries="@array/theme_names"
+            android:entryValues="@array/theme_values"
+            android:defaultValue="0"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_system" >
+        <EditTextPreference
+            android:key="prefSystemFirmwarePath"
+            android:title="@string/pref_system_firmware_path"
+            />
+        <EditTextPreference
+            android:key="prefSystemRinexUrl"
+            android:title="@string/pref_system_rinex_url"
+            />
+        <EditTextPreference
+            android:key="prefSystemPredictUrl"
+            android:title="@string/pref_system_predict_url"
+            />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

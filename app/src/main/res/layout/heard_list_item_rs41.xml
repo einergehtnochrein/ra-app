@@ -1,0 +1,191 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="item"
+            type="de.leckasemmel.sonde1.SondeListItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/heard_group_rs41"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility='@{(item.sondeDecoder == item.SondeDecoder.SONDE_DECODER_RS41) ? View.VISIBLE : View.GONE}'
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/heard_item_model_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{item.modelName}'
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginEnd="10dp"
+                android:visibility='@{item.modelName.length() > 0 ? View.VISIBLE : View.GONE}'
+                />
+
+            <TextView
+                android:id="@+id/heard_item_tx_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text='@{String.format(Locale.US, "Ttx=%.0f°C", item.rs41temperatureTx)}'
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility='@{!Double.isNaN(item.rs41temperatureTx) ? View.VISIBLE : View.GONE}'
+                />
+
+            <TextView
+                android:id="@+id/heard_item_reference_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{String.format(Locale.US, "Tref=%.0f°C", item.rs41temperatureRef)}'
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/heard_item_firmware_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginEnd="10dp"
+                android:text='@{String.format(Locale.US, "FW: %d.%02d.%02d", item.rs41FirmwareVersion / 10000, (item.rs41FirmwareVersion % 10000) / 100, item.rs41FirmwareVersion % 100)}'
+                android:visibility="@{item.rs41FirmwareVersion == 0 ? View.GONE : View.VISIBLE}"
+                />
+
+            <TextView
+                android:id="@+id/heard_item_board_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginEnd="10dp"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/heard_item_gps_jammer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/heard_item_killtimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                />
+
+            <TextView
+                android:id="@+id/heard_item_dewpoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                />
+
+            <TextView
+                android:id="@+id/heard_item_gpsacc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/heard_group_kill_extra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/heard_item_kill_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                />
+
+            <TextView
+                android:id="@+id/heard_item_descending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/heard_group_xdata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility='@{item.rs41XdataNumInstruments == 0 ? View.GONE : View.VISIBLE}'>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/heard_item_xdata_num_instruments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "%d instr.", item.rs41XdataNumInstruments)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_xdata_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    app:xdataSonde='@{item.SondeDecoder.SONDE_DECODER_RS41}'
+                    app:xdata='@{item.xdata}'
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

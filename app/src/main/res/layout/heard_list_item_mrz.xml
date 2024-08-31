@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="item"
+            type="de.leckasemmel.sonde1.SondeListItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/heard_group_mrz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility='@{(item.sondeDecoder == item.SondeDecoder.SONDE_DECODER_MRZ) ? View.VISIBLE : View.GONE}'
+        >
+
+        <TextView
+            android:id="@+id/heard_item_mrz_pacc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text='@{item.mrzPAcc &lt; 25.0 ? String.format(Locale.US, "%.1f m", item.mrzPAcc) : String.format(Locale.US, "%.0f m", item.mrzPAcc)}'
+            />
+
+        <TextView
+            android:id="@+id/heard_item_serial_sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility='@{item.mrzSerialSensor > 0 ? View.VISIBLE : View.GONE}'
+            />
+    </LinearLayout>
+</layout>

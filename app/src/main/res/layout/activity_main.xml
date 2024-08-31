@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="viewModel"
+            type="de.leckasemmel.sonde1.viewmodels.MainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:id="@+id/main_layout">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            app:subtitle='@{viewModel.raName}'
+            >
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/progress_ble_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility='@{viewModel.bleTransferVisible ? View.VISIBLE : View.GONE}'
+            >
+
+            <TextView
+                android:id="@+id/progress_ble_download_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text='@{viewModel.bleTransferTitle}'
+                />
+
+            <TextView
+                android:id="@+id/progress_ble_download_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text='@{viewModel.bleTransferProgressInfo}'
+                />
+
+            <ProgressBar
+                android:id="@+id/progress_ble_download"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:max="100"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility='@{viewModel.bleTransferProgressVisible ? View.VISIBLE : View.GONE}'
+                android:progress='@{viewModel.bleTransferProgress}'
+                />
+        </LinearLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_navigation_menu"
+            />
+    </LinearLayout>
+</layout>

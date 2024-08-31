@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_overview"
+        android:enabled="true"
+        android:icon="@drawable/gear_32"
+        android:title="@string/action_dashboard"
+        />
+    <item
+        android:id="@+id/action_map"
+        android:enabled="true"
+        android:icon="@drawable/map_icon_32"
+        android:title="@string/action_map"
+        />
+    <item
+        android:id="@+id/action_heard_list"
+        android:enabled="true"
+        android:icon="@drawable/list_32"
+        android:title="@string/action_heard_list"
+        />
+</menu>

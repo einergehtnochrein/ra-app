@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="androidx.core.text.HtmlCompat"/>
+        <import type="java.util.Locale"/>
+        <import type="de.leckasemmel.sonde1.SondeListItem"/>
+        <variable
+            name="item"
+            type="de.leckasemmel.sonde1.SondeListItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/heard_group_mts01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility='@{(item.sondeDecoder == SondeListItem.SondeDecoder.SONDE_DECODER_PSB3) ? View.VISIBLE : View.GONE}'
+        >
+
+        <TextView
+            android:id="@+id/heard_item_temp_inner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@{HtmlCompat.fromHtml(String.format(Locale.US, @string/fragment_heard_label_mts01_temperature_inner, item.mts01InnerTemperature), HtmlCompat.FROM_HTML_MODE_LEGACY)}"
+            android:visibility='@{Double.isNaN(item.mts01InnerTemperature) ? View.GONE : View.VISIBLE}'
+            />
+    </LinearLayout>
+</layout>

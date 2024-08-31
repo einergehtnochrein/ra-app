@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="viewModel"
+            type="de.leckasemmel.sonde1.viewmodels.DashboardViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility='@{viewModel.loaderMode ? View.VISIBLE : View.GONE}'
+            >
+
+            <TextView
+                android:id="@+id/loader_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:background="?attr/colorLcdBackground"
+                android:textColor="?attr/colorLcdForeground"
+                android:textSize="36sp"
+                android:gravity="center_horizontal"
+                android:text='@string/fragment_dashboard_loader_mode'
+                />
+
+            <TextView
+                android:id="@+id/loader_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textSize="24sp"
+                android:gravity="center_horizontal"
+                android:text='@{String.format(Locale.US, "Version %d", viewModel.loaderVersion)}'
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:visibility='@{viewModel.loaderMode ? View.GONE : View.VISIBLE}'
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
+
+                <LinearLayout
+                    android:id="@+id/control_gauges"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:divider="@drawable/separator_lcd"
+                    android:showDividers="middle"
+                    android:background="?attr/colorPrimary"
+                    android:elevation="4dp"
+                    android:visibility="@{viewModel.mode == 2 ? View.GONE : View.VISIBLE}"
+                    >
+
+                    <TextView
+                        android:id="@+id/edit_control_altitude"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:background="?attr/colorLcdBackground"
+                        android:textColor="?attr/colorLcdForeground"
+                        android:textSize="24sp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_horizontal"
+                        app:lastWayPointAltitude='@{viewModel.lastWayPoint}'
+                        />
+
+                    <TextView
+                        android:id="@+id/edit_control_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:background="?attr/colorLcdBackground"
+                        android:textColor="?attr/colorLcdForeground"
+                        android:textSize="24sp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_horizontal"
+                        android:text="@{viewModel.sondeSerial}"
+                        />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/smeter_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.mode == 2 ? View.GONE : View.VISIBLE}"
+                    >
+
+                    <de.leckasemmel.sonde1.views.SMeterView
+                        android:id="@+id/smeter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onLongClick='@{(view) -> viewModel.onSmeterLongClicked(view)}'
+                        app:mode="dBuV"
+                        app:colorBackground="?attr/colorSmeterBackground"
+                        app:colorScale="?attr/colorSmeterScale"
+                        app:colorNumbers="?attr/colorSmeterNumbers"
+                        app:colorNumbersAccent="?attr/colorSmeterNumbersAccent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:level="@{viewModel.rssi}"
+                        app:smeterStyle="@{viewModel.smeter_style}"
+                        android:enabled='@{!Double.isNaN(viewModel.rssi)}'
+                        />
+
+                    <ImageView
+                        android:id="@+id/switch_monitor_icon"
+                        android:contentDescription="@string/fragment_dashboard_monitor_state_content_description"
+                        android:src="@drawable/baseline_headset_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/switch_monitor"
+                        app:layout_constraintEnd_toEndOf="@id/switch_monitor"
+                        app:layout_constraintBottom_toTopOf="@id/switch_monitor"
+                        />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_monitor"
+                        android:enabled="@{viewModel.monitorSupported}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:visibility="@{viewModel.connected ? View.VISIBLE : View.GONE}"
+                    >
+
+                    <EditText
+                        android:id="@+id/edit_frequency"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/colorLcdBackground"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:hint="@string/fragment_dashboard_enter_frequency_hint"
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="?attr/colorLcdForeground"
+                        android:textSize="36sp"
+                        android:text='@={viewModel.frequency_s}'
+                        android:visibility="@{viewModel.mode == 2 ? View.GONE : View.VISIBLE}"
+                        />
+
+                    <TextView
+                        android:id="@+id/static_frequency"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/colorLcdBackground"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:hint="@string/fragment_dashboard_enter_frequency_hint"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="?attr/colorLcdForeground"
+                        android:textSize="36sp"
+                        android:text='@string/fragment_dashboard_scanning'
+                        android:visibility="@{viewModel.mode == 2 ? View.VISIBLE : View.GONE}"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.connected ? View.VISIBLE : View.GONE}"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="@{viewModel.debugEnable ? View.VISIBLE : View.GONE}"
+                        >
+
+                        <TextView
+                            android:id="@+id/spinner_debug_audio_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:textSize="16sp"
+                            android:layout_marginStart="17dp"
+                            android:text="@string/fragment_dashboard_debug_audio_label"
+                            />
+
+                        <Spinner
+                            android:id="@+id/spinner_debug_audio_channel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="17dp"
+                            android:selectedItemPosition="@={viewModel.debugAudio}"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="@{(viewModel.monitor || viewModel.mode == 2) ? View.GONE : View.VISIBLE}"
+                        >
+
+                        <TextView
+                            android:id="@+id/spinner_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:textSize="16sp"
+                            android:layout_marginStart="17dp"
+                            android:text="@string/fragment_dashboard_sonde_type"
+                            />
+
+                        <Spinner
+                            android:id="@+id/spinner_manual_sonde_decoder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="17dp"
+                            android:selectedItemPosition="@={viewModel.decoder}"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:id="@+id/battery_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:textSize="16sp"
+                            android:layout_marginStart="17dp"
+                            android:text="@string/fragment_dashboard_battery"
+                            />
+
+                        <TextView
+                            android:id="@+id/textview_battery_voltage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:textSize="16sp"
+                            android:layout_marginStart="17dp"
+                            android:text='@{String.format(Locale.US, "%.2fV", viewModel.batteryVoltage)}'
+                            />
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/radio_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:checkedButton="@+id/radio_mode_manual"
+                        android:onCheckedChanged="@{viewModel::onModeSelected}"
+                        android:visibility="@{viewModel.monitor ? View.GONE : View.VISIBLE}"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_mode_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="17dp"
+                            android:text="@string/fragment_dashboard_mode_list"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_mode_manual"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="17dp"
+                            android:text="@string/fragment_dashboard_mode_manual"
+                            />
+                        <RadioButton
+                            android:id="@+id/radio_mode_spectrum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="17dp"
+                            android:text="@string/fragment_dashboard_mode_spectrum"
+                            />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.connected ? View.GONE : View.VISIBLE}"
+                    >
+
+                    <TextView
+                        android:id="@+id/call_setup1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorLcdBackground"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="?attr/colorLcdForeground"
+                        android:textSize="36sp"
+                        android:text='@string/fragment_dashboard_searching'
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom"
+                    >
+
+                    <de.leckasemmel.sonde1.views.SpectrumView
+                        android:id="@+id/spectrum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="?attr/colorSpectrumBackground"
+                        app:colorBins="?attr/colorSpectrumBins"
+                        app:colorGrid="?attr/colorSpectrumGrid"
+                        app:colorText="?attr/colorSpectrumText"
+                        app:rangeStart="@={viewModel.spectrumStartFrequency}"
+                        app:rangeEnd="@={viewModel.spectrumEndFrequency}"
+                        app:spectrumLevelsFrequency="@{viewModel.spectrumLevelsFrequency}"
+                        app:spectrumLevelsSpacing="@{viewModel.spectrumLevelsSpacing}"
+                        app:spectrumLevels="@{viewModel.spectrumLevels}"
+                        android:visibility="@{viewModel.mode == 2 ? View.VISIBLE : View.GONE}"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

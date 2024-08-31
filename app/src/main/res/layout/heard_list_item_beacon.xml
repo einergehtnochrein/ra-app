@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="item"
+            type="de.leckasemmel.sonde1.SondeListItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/heard_group_beacon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility='@{(item.sondeDecoder == item.SondeDecoder.SONDE_DECODER_BEACON) ? View.VISIBLE : View.GONE}'
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="@string/fragment_heard_label_beacon_hex_id"
+            />
+
+        <TextView
+            android:id="@+id/heard_item_hex15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text='@{item.beaconHex15}'
+            />
+    </LinearLayout>
+</layout>

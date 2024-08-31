@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.leckasemmel.sonde1.MainActivity">
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_ephemupdate"
+        android:orderInCategory="100"
+        android:title="@string/action_ephemupdate"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_firmware_update"
+        android:orderInCategory="100"
+        android:title="@string/action_firmware_update"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/action_about" />
+</menu>

@@ -1,0 +1,131 @@
+<resources>
+
+    <!-- AppTheme extends ...NoActionBar, so there is no decor-provided ActionBar,
+         and we can use ToolBar instance as action bar.
+      -->
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/ra_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/ra_theme_light_onPrimary</item>
+        <item name="colorSecondary">@color/ra_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/ra_theme_light_onSecondary</item>
+        <item name="colorTertiary">@color/ra_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/ra_theme_light_onTertiary</item>
+        <item name="colorPrimaryContainer">@color/ra_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/ra_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondaryContainer">@color/ra_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/ra_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiaryContainer">@color/ra_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/ra_theme_light_onTertiaryContainer</item>
+
+        <item name="colorSurfaceDim">@color/ra_theme_light_surfaceDim</item>
+        <item name="colorSurface">@color/ra_theme_light_surface</item>
+        <item name="colorSurfaceBright">@color/ra_theme_light_surfaceBright</item>
+        <item name="colorSurfaceContainerLowest">@color/ra_theme_light_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/ra_theme_light_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/ra_theme_light_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/ra_theme_light_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/ra_theme_light_surfaceContainerHighest</item>
+        <item name="colorOnSurface">@color/ra_theme_light_onSurface</item>
+        <item name="colorOnSurfaceVariant">@color/ra_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/ra_theme_light_outline</item>
+        <item name="colorOutlineVariant">@color/ra_theme_light_outlineVariant</item>
+
+        <item name="colorError">@color/ra_theme_light_error</item>
+        <item name="colorOnError">@color/ra_theme_light_onError</item>
+        <item name="colorErrorContainer">@color/ra_theme_light_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/ra_theme_light_onErrorContainer</item>
+        <item name="colorSurfaceInverse">@color/ra_theme_light_surfaceInverse</item>
+        <item name="colorOnSurfaceInverse">@color/ra_theme_light_onSurfaceInverse</item>
+        <item name="colorPrimaryInverse">@color/ra_theme_light_primaryInverse</item>
+
+
+        <item name="colorSmeterBackground">@color/ra_theme_light_surfaceContainerLowest</item>
+        <item name="colorSmeterScale">@color/ra_theme_light_onSurfaceVariant</item>
+        <item name="colorSmeterScaleBar">@color/ra_theme_light_onSurfaceVariant</item>
+        <item name="colorSmeterNumbers">@color/ra_theme_light_onSurface</item>
+        <item name="colorSmeterNumbersAccent">@color/ra_theme_light_tertiary</item>
+
+        <item name="colorSpectrumBackground">@color/ra_theme_light_surfaceContainerLowest</item>
+        <item name="colorSpectrumBins">@color/ra_theme_light_onSurface</item>
+        <item name="colorSpectrumGrid">@color/ra_theme_light_onSurfaceVariant</item>
+        <item name="colorSpectrumText">@color/ra_theme_light_onSurfaceVariant</item>
+
+        <item name="colorLcdBackground">@color/ra_theme_light_secondaryContainer</item>
+        <item name="colorLcdForeground">@color/ra_theme_light_onSecondaryContainer</item>
+        <item name="colorLcdForegroundDisabled">@color/ra_theme_light_onSecondaryContainer</item>
+
+        <item name="colorTextBackgroundAccent">@color/ra_theme_light_surfaceDim</item>
+
+        <item name="colorMapCreditText">@color/ra_theme_light_onSurface</item>
+        <item name="colorMapCreditLinkText">@color/ra_theme_light_onSurfaceVariant</item>
+        <item name="colorMapCreditBackground">@color/ra_theme_light_surface</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/ra_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/ra_theme_dark_onPrimary</item>
+        <item name="colorSecondary">@color/ra_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/ra_theme_dark_onSecondary</item>
+        <item name="colorTertiary">@color/ra_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/ra_theme_dark_onTertiary</item>
+        <item name="colorPrimaryContainer">@color/ra_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/ra_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondaryContainer">@color/ra_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/ra_theme_dark_onSecondaryContainer</item>
+        <item name="colorTertiaryContainer">@color/ra_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/ra_theme_dark_onTertiaryContainer</item>
+
+        <item name="colorSurfaceDim">@color/ra_theme_dark_surfaceDim</item>
+        <item name="colorSurface">@color/ra_theme_dark_surface</item>
+        <item name="colorSurfaceBright">@color/ra_theme_dark_surfaceBright</item>
+        <item name="colorSurfaceContainerLowest">@color/ra_theme_dark_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/ra_theme_dark_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/ra_theme_dark_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/ra_theme_dark_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/ra_theme_dark_surfaceContainerHighest</item>
+        <item name="colorOnSurface">@color/ra_theme_dark_onSurface</item>
+        <item name="colorOnSurfaceVariant">@color/ra_theme_dark_onSurfaceVariant</item>
+        <item name="colorOutline">@color/ra_theme_dark_outline</item>
+        <item name="colorOutlineVariant">@color/ra_theme_dark_outlineVariant</item>
+
+        <item name="colorError">@color/ra_theme_dark_error</item>
+        <item name="colorOnError">@color/ra_theme_dark_onError</item>
+        <item name="colorErrorContainer">@color/ra_theme_dark_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/ra_theme_dark_onErrorContainer</item>
+        <item name="colorSurfaceInverse">@color/ra_theme_dark_surfaceInverse</item>
+        <item name="colorOnSurfaceInverse">@color/ra_theme_dark_onSurfaceInverse</item>
+        <item name="colorPrimaryInverse">@color/ra_theme_dark_primaryInverse</item>
+
+
+        <item name="colorSmeterBackground">@color/ra_theme_dark_surfaceContainerLowest</item>
+        <item name="colorSmeterScale">@color/ra_theme_dark_onSurfaceVariant</item>
+        <item name="colorSmeterScaleBar">@color/ra_theme_dark_onSurfaceVariant</item>
+        <item name="colorSmeterNumbers">@color/ra_theme_dark_onSurface</item>
+        <item name="colorSmeterNumbersAccent">@color/ra_theme_dark_tertiary</item>
+
+        <item name="colorSpectrumBackground">@color/ra_theme_dark_surfaceDim</item>
+        <item name="colorSpectrumBins">@color/ra_theme_dark_onSurface</item>
+        <item name="colorSpectrumGrid">@color/ra_theme_dark_onSurfaceVariant</item>
+        <item name="colorSpectrumText">@color/ra_theme_dark_onSurfaceVariant</item>
+
+        <item name="colorLcdBackground">@color/ra_theme_dark_secondaryContainer</item>
+        <item name="colorLcdForeground">@color/ra_theme_dark_onSecondaryContainer</item>
+        <item name="colorLcdForegroundDisabled">@color/ra_theme_dark_onSecondaryContainer</item>
+
+        <item name="colorTextBackgroundAccent">@color/ra_theme_dark_surfaceDim</item>
+
+        <item name="colorMapCreditText">@color/ra_theme_dark_onSurface</item>
+        <item name="colorMapCreditLinkText">@color/ra_theme_dark_onSurfaceVariant</item>
+        <item name="colorMapCreditBackground">@color/ra_theme_dark_surface</item>
+    </style>
+
+    <style name="Widget.App.Button.OutlinedButton.IconOnly" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+</resources>

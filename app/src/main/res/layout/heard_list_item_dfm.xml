@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="item"
+            type="de.leckasemmel.sonde1.SondeListItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/heard_group_dfm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility='@{(item.sondeDecoder == item.SondeDecoder.SONDE_DECODER_GRAW) ? View.VISIBLE : View.GONE}'
+        >
+
+        <TextView
+            android:id="@+id/position_error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/fragment_heard_label_dfm_position_error"
+            />
+
+        <TextView
+            android:id="@+id/heard_item_dfm_ehpe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text='@{String.format(Locale.US, "%.1fm (H)", item.dfmEhpe)}'
+            />
+
+        <TextView
+            android:id="@+id/heard_item_dfm_evpe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text='@{String.format(Locale.US, "%.1fm (V)", item.dfmEvpe)}'
+            />
+    </LinearLayout>
+</layout>

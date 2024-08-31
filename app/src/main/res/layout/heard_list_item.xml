@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="item"
+            type="de.leckasemmel.sonde1.SondeListItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/heard_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginBottom="10dp"
+        android:background="?attr/colorSurfaceContainerHigh"
+        >
+
+        <LinearLayout
+            android:id="@+id/heard_group_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/heard_item_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:imageResource='@{item.imageResId}'
+                android:contentDescription="@string/fragment_heard_item_image_description"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/heard_group_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/heard_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{item.name}'
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "%.3f MHz", item.frequency / 1e6)}'
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/colorTextBackgroundAccent"
+                    >
+
+                    <TextView
+                        android:id="@+id/heard_item_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text='@{String.format(Locale.US, "%.0f m", item.position.altitude)}'
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:visibility="@{Double.isNaN(item.position.altitude) ? View.GONE : View.VISIBLE}"
+                        />
+
+                    <TextView
+                        android:id="@+id/heard_item_climb_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text='@{String.format(Locale.US, "%+.1f m/s", item.position.climbRate)}'
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:visibility="@{Double.isNaN(item.position.climbRate) ? View.GONE : View.VISIBLE}"
+                        />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_frequency_offset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text='@{String.format(Locale.US, "%+.1f kHz", item.frequencyOffset / 1e3)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="@{item.validFrequencyOffset ? View.VISIBLE : View.GONE}"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_rssi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "%.1f dBm", item.rssi)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/heard_group_metro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="@{item.validPtu ? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:id="@+id/heard_item_pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text='@{String.format(Locale.US, "%.1f hPa", item.pressure)}'
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility='@{Double.isNaN(item.pressure) ? View.GONE : View.VISIBLE}'
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text='@{String.format(Locale.US, "%.1f°C", item.temperature)}'
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility='@{Double.isNaN(item.temperature) ? View.GONE : View.VISIBLE}'
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text='@{String.format(Locale.US, "%.1f%%", item.humidity)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility='@{Double.isNaN(item.humidity) ? View.GONE : View.VISIBLE}'
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_vbat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "%.2f V", item.vbat)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/heard_group_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="@{item.validPosition ? View.VISIBLE : View.GONE}"
+                >
+
+                <TextView
+                    android:id="@+id/heard_item_latitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "%.5f°", item.latitude)}'
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_longitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text='@{String.format(Locale.US, "%.5f°", item.longitude)}'
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text='@{String.format(Locale.US, "%.0f km/h", item.groundSpeed)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility='@{Double.isNaN(item.groundSpeed) ? View.GONE : View.VISIBLE}'
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/heard_group_extra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="@{item.validExtra ? View.VISIBLE : View.GONE}"
+                >
+
+                <TextView
+                    android:id="@+id/heard_item_frame_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text='@{String.format(Locale.US, "#%d", item.frameNumber)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="@{(item.frameNumber > 0) ? View.VISIBLE : View.GONE}"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_used_sats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "%d", item.usedSats)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_visible_sats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "/%d sats", item.visibleSats)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="0dp"
+                    />
+
+                <TextView
+                    android:id="@+id/heard_item_cpu_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.format(Locale.US, "Tcpu=%.0f°C", item.temperatureCpu)}'
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="@{item.validCpuTemperature ? View.VISIBLE : View.GONE}"
+                    />
+            </LinearLayout>
+
+            <include app:item="@{item}" layout="@layout/heard_list_item_beacon"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_c50"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_cf06"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_dfm"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_imet"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_meisei"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_m20"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_rs41"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_mrz"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_mts01"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

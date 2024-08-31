@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="viewModel"
+            type="de.leckasemmel.sonde1.viewmodels.MapViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/tab_overview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:divider="@drawable/separator_lcd"
+            android:showDividers="middle"
+            android:id="@+id/map_gauges"
+            android:elevation="4dp"
+            >
+
+            <TextView
+                android:id="@+id/edit_map_altitude"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="?attr/colorLcdBackground"
+                android:textColor="?attr/colorLcdForeground"
+                android:fontFamily="sans-serif"
+                android:textSize="24sp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                android:text=
+'@{Double.isNaN(viewModel.mFocusSonde.altitude) ? "" : String.format(Locale.US, "%.0f m", viewModel.mFocusSonde.altitude)}'
+                />
+
+            <TextView
+                android:id="@+id/edit_map_climb_rate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="?attr/colorLcdBackground"
+                android:textColor="?attr/colorLcdForeground"
+                android:fontFamily="sans-serif"
+                android:textSize="24sp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                android:text=
+'@{Double.isNaN(viewModel.mFocusSonde.climbRate) ? "" : String.format(Locale.US, "%.1f m/s", viewModel.mFocusSonde.climbRate)}'
+                />
+
+            <TextView
+                android:id="@+id/edit_map_distance"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="?attr/colorLcdBackground"
+                android:textColor="?attr/colorLcdForeground"
+                android:fontFamily="sans-serif"
+                android:textSize="24sp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                app:sondeDistance='@{viewModel.distance}'
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:divider="@drawable/separator_lcd"
+            android:showDividers="middle"
+            android:id="@+id/map_group_gauges2"
+            android:elevation="4dp"
+            >
+
+            <TextView
+                android:id="@+id/edit_map_speed"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="?attr/colorLcdBackground"
+                android:textColor="?attr/colorLcdForeground"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                android:text=
+'@{Double.isNaN(viewModel.mFocusSonde.groundSpeed) ? "" : String.format(Locale.US, "%.0f km/h", viewModel.mFocusSonde.groundSpeed)}'
+                />
+
+            <TextView
+                android:id="@+id/edit_map_direction"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="?attr/colorLcdBackground"
+                android:textColor="?attr/colorLcdForeground"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                android:text=
+'@{Double.isNaN(viewModel.mFocusSonde.direction) ? "" : String.format(Locale.US, "%.0f°", viewModel.mFocusSonde.direction)}'
+                />
+
+            <TextView
+                android:id="@+id/edit_map_eta"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="?attr/colorLcdBackground"
+                android:textColor="?attr/colorLcdForeground"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal"
+                android:onLongClick='@{(view) -> viewModel.onPredictLandingTimeLongClicked(view)}'
+                app:sondeEta='@{viewModel.mFocusSonde.timeEta}'
+                app:currentDate='@{viewModel.currentDate}'
+                app:landingTimeStyle='@{viewModel.landingTimeStyle}'
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <de.leckasemmel.sonde1.views.RaMapView
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                app:multiMapDataStore='@{viewModel.multiMapDataStore}'
+                app:useHillShading='@{viewModel.useHillShading}'
+                app:hillShadingPath='@{viewModel.hillShadingPath}'
+                app:useExternalTheme='@{viewModel.useExternalTheme}'
+                app:externalThemePath='@{viewModel.externalThemePath}'
+                app:centerPosition='@{viewModel.centerPosition}'
+                app:myPosition='@{viewModel.myPosition}'
+                app:onlineTileSource='@{viewModel.onlineTileSource}'
+                app:cacheIndex='@{viewModel.onlineCacheIndex}'
+                app:mapMode='@{viewModel.mapMode}'
+                app:sondeLayers='@{viewModel.sondeLayers}'
+                app:showDebugLayers='@{viewModel.debugGrid}'
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                >
+
+                <Button
+                    android:id="@+id/button_predict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_map_button_predict2"
+                    android:textAllCaps="false"
+                    android:onClick='@{(view) -> viewModel.onPredictClicked(view)}'
+                    />
+
+                <TextView
+                    android:id="@+id/burst_altitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text='@{String.format(Locale.US, "%.0fm", viewModel.predictBurstAltitude)}'
+                    android:textColor='?attr/colorLcdForeground'
+                    android:background='?attr/colorLcdBackground'
+                    android:onLongClick="@{(view) -> viewModel.onBurstAltitudeLongClicked(view)}"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/map_fab_goto_my_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/fragment_map_fab_goto_my_position_content_description"
+                android:src="@drawable/baseline_my_location_24"
+                android:onClick='@{(view) -> viewModel.onFabGotoMyPositionClicked(view)}'
+                app:fabSize="normal"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/map_fab_goto_sonde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/map_fab_goto_my_position"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/fragment_map_fab_goto_sonde_content_description"
+                android:src="@drawable/baseline_location_searching_24"
+                android:onClick='@{(view) -> viewModel.onFabGotoSondeClicked(view)}'
+                app:fabSize="normal"
+                />
+
+            <TextView
+                android:id="@+id/credits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:singleLine="true"
+                android:text="@{viewModel.mapCredits}"
+                android:visibility='@{viewModel.mapMode == 0 ? View.GONE : View.VISIBLE}'
+                android:alpha="70"
+                android:textColor='?attr/colorMapCreditText'
+                android:background='?attr/colorMapCreditBackground'
+                android:textColorLink='?attr/colorMapCreditLinkText'
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

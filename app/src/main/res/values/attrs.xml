@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SMeterView">
+        <attr name="mode" format="enum">
+            <enum name="SUnits" value="0"/>
+            <enum name="dBuV" value="1"/>
+        </attr>
+        <attr name="colorBackground" format="reference|color"/>
+        <attr name="colorScale" format="reference|color"/>
+        <attr name="colorNumbers" format="reference|color"/>
+        <attr name="colorNumbersAccent" format="reference|color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SpectrumView">
+        <attr name="colorBins" format="reference|color"/>
+        <attr name="colorGrid" format="reference|color"/>
+        <attr name="colorText" format="reference|color"/>
+    </declare-styleable>
+
+    <!-- Custom attributes in themes -->
+    <declare-styleable name="AppTheme">
+        <attr name="colorSmeterBackground" format="reference|color"/>
+        <attr name="colorSmeterScale" format="reference|color"/>
+        <attr name="colorSmeterScaleBar" format="reference|color"/>
+        <attr name="colorSmeterNumbers" format="reference|color"/>
+        <attr name="colorSmeterNumbersAccent" format="reference|color"/>
+
+        <attr name="colorSpectrumBackground" format="reference|color"/>
+        <attr name="colorSpectrumBins" format="reference|color"/>
+        <attr name="colorSpectrumGrid" format="reference|color"/>
+        <attr name="colorSpectrumText" format="reference|color"/>
+
+        <attr name="colorLcdBackground" format="reference|color"/>
+        <attr name="colorLcdForeground" format="reference|color"/>
+        <attr name="colorLcdForegroundDisabled" format="reference|color"/>
+
+        <attr name="colorTextBackgroundAccent" format="reference|color"/>
+
+        <attr name="colorMapCreditText" format="reference|color"/>
+        <attr name="colorMapCreditLinkText" format="reference|color"/>
+        <attr name="colorMapCreditBackground" format="reference|color"/>
+    </declare-styleable>
+</resources>
