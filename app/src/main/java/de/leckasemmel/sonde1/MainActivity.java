@@ -659,9 +659,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.action_fragment_map_debug_grid) {
             // Allow fragments to handle their own stuff
             returnValue = false;
-        } else if (id == R.id.action_fragment_map_toggle_maps) {
-            // Allow fragments to handle their own stuff
-            returnValue = false;
         } else {
             returnValue = super.onOptionsItemSelected(item);
         }

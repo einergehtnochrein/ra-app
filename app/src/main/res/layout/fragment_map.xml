@@ -200,11 +200,25 @@
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/map_fab_goto_my_position"
+                android:id="@+id/map_fab_next_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/fragment_map_fab_goto_my_position_content_description"
+                android:src="@drawable/baseline_layers_24"
+                android:onClick='@{(view) -> viewModel.onFabNextMapClicked(view)}'
+                android:onLongClick='@{(view) -> viewModel.onFabNextMapLongClicked(view)}'
+                app:fabSize="normal"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/map_fab_goto_my_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/map_fab_next_map"
                 android:layout_marginTop="10dp"
                 android:contentDescription="@string/fragment_map_fab_goto_my_position_content_description"
                 android:src="@drawable/baseline_my_location_24"

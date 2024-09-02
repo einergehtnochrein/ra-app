@@ -140,9 +140,6 @@ public class FragmentMap extends Fragment
                     boolean gridEnabled = Boolean.TRUE.equals(viewModel.debugGrid.getValue());
                     viewModel.setDebugGrid(!gridEnabled);
                 }
-                if (menuItem.getItemId() == R.id.action_fragment_map_toggle_maps) {
-                    viewModel.setNextMap();
-                }
 
                 return false;
             }

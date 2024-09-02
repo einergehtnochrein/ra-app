@@ -326,6 +326,10 @@ public class MapViewModel extends ViewModel
         return true;
     }
 
+    public boolean onFabNextMapClicked(View view) {
+        setNextMap();
+        return true;
+    }
     public boolean onFabGotoMyPositionClicked(View view) {
         if (myPosition != null) {
             setCenterPosition(myPosition.getValue());
