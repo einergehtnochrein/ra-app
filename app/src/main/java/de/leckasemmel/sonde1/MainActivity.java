@@ -371,7 +371,7 @@ public class MainActivity extends AppCompatActivity
                         intent.putExtra("filename", mTargetInfo.firmwareName);
                         startService(intent);
                     })
-                    .setNegativeButton(getString(R.string.firmware_update_dialog_confirmation_button_negative), (dialog, which) -> {
+                    .setNegativeButton(getString(R.string.dialog_cancel), (dialog, which) -> {
                     })
                     .create().show();
         }
@@ -402,7 +402,7 @@ public class MainActivity extends AppCompatActivity
                         dashboardViewModel.setConnected(false);
                     }
                 })
-                .setNegativeButton(getString(R.string.firmware_update_dialog_confirmation_button_negative), (dialog, which) -> {
+                .setNegativeButton(getString(R.string.dialog_cancel), (dialog, which) -> {
                 })
                 .create().show();
     }
@@ -659,9 +659,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.action_fragment_map_debug_grid) {
             // Allow fragments to handle their own stuff
             returnValue = false;
-        } else if (id == R.id.action_fragment_map_toggle_maps) {
-            // Allow fragments to handle their own stuff
-            returnValue = false;
         } else {
             returnValue = super.onOptionsItemSelected(item);
         }
@@ -779,6 +776,7 @@ public class MainActivity extends AppCompatActivity
         mBinding.bottomNavigation.setSelectedItemId(R.id.action_map);
         mapViewModel.setFocusSonde(item);
         mapViewModel.updateFromHeardList();
+        mapViewModel.setCenterPosition(new LatLong(item.getLatitude(), item.getLongitude()));
     }
 
     @Override

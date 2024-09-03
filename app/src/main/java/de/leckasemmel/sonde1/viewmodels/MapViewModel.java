@@ -41,6 +41,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import de.leckasemmel.sonde1.OnlineMapDescriptor;
+import de.leckasemmel.sonde1.OnlineMapEnableDialog;
 import de.leckasemmel.sonde1.OnlineTileSourceTMS;
 import de.leckasemmel.sonde1.PredictorTawhiri;
 import de.leckasemmel.sonde1.R;
@@ -117,6 +118,17 @@ public class MapViewModel extends ViewModel
     }
     public void setMapMode (int mode) {
         mapMode.setValue(mode);
+    }
+
+    private Boolean getSafeBoolean(MutableLiveData<Boolean> var, Boolean defaultValue) {
+        if (var == null) {
+            return defaultValue;
+        }
+        Boolean value = var.getValue();
+        if (value == null) {
+            return defaultValue;
+        }
+        return value;
     }
 
     public MapViewModel() {
@@ -291,10 +303,10 @@ public class MapViewModel extends ViewModel
                 .setTitle(context.getString(R.string.fragment_map_dialog_burst_altitude_title))
                 .setCancelable(true)
                 .setView(editLayout)
-                .setPositiveButton(context.getString(R.string.fragment_map_dialog_burst_altitude_ok), (dialog, whichButton) -> {
+                .setPositiveButton(context.getString(R.string.dialog_ok), (dialog, whichButton) -> {
                     predictBurstAltitude.setValue(Double.parseDouble(editField.getText().toString()));
                 })
-                .setNegativeButton(context.getString(R.string.fragment_map_dialog_burst_altitude_cancel), (dialog, whichButton) -> dialog.cancel())
+                .setNegativeButton(context.getString(R.string.dialog_cancel), (dialog, whichButton) -> dialog.cancel())
                 .show()
                 ;
 
@@ -319,9 +331,37 @@ public class MapViewModel extends ViewModel
                     }
                     dialog.cancel();
                 })
-                .setNegativeButton(context.getString(R.string.fragment_map_dialog_landing_time_style_cancel), (dialog, whichButton) -> dialog.cancel())
+                .setNegativeButton(context.getString(R.string.dialog_cancel), (dialog, whichButton) -> dialog.cancel())
                 .show()
         ;
+
+        return true;
+    }
+
+    public boolean onFabNextMapClicked(View view) {
+        setNextMap();
+        return true;
+    }
+
+    public boolean onFabNextMapLongClicked(View view) {
+        Context context = view.getContext();
+
+        DialogOnlineMapEnableViewModel viewModel = new DialogOnlineMapEnableViewModel();
+        viewModel.nameMap1.setValue(mRaPrefs.getMapOnline1Name());
+        viewModel.nameMap2.setValue(mRaPrefs.getMapOnline2Name());
+        viewModel.nameMap3.setValue(mRaPrefs.getMapOnline3Name());
+        viewModel.enableMap1.setValue(mRaPrefs.getMapOnline1Enable());
+        viewModel.enableMap2.setValue(mRaPrefs.getMapOnline2Enable());
+        viewModel.enableMap3.setValue(mRaPrefs.getMapOnline3Enable());
+
+        OnlineMapEnableDialog mapEnableDialog = new OnlineMapEnableDialog(context, viewModel, v -> {
+            SharedPreferences.Editor myEdit = mRaPrefs.getSharedPreferences().edit();
+            myEdit.putBoolean(RaPreferences.KEY_PREF_MAP_ONLINE1_ENABLE, getSafeBoolean(viewModel.enableMap1, false));
+            myEdit.putBoolean(RaPreferences.KEY_PREF_MAP_ONLINE2_ENABLE, getSafeBoolean(viewModel.enableMap2, false));
+            myEdit.putBoolean(RaPreferences.KEY_PREF_MAP_ONLINE3_ENABLE, getSafeBoolean(viewModel.enableMap3, false));
+            myEdit.apply();
+        });
+        mapEnableDialog.show();
 
         return true;
     }

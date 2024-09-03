@@ -110,7 +110,7 @@ public class DashboardViewModel extends ViewModel {
                     }
                     dialog.cancel();
                 })
-                .setNegativeButton(context.getString(R.string.fragment_dashboard_dialog_smeter_style_cancel), (dialog, whichButton) -> dialog.cancel())
+                .setNegativeButton(context.getString(R.string.dialog_cancel), (dialog, whichButton) -> dialog.cancel())
                 .show()
         ;
 

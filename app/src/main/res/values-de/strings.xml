@@ -3,6 +3,9 @@
 
     <string name="title_activity_settings">Einstellungen</string>
 
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Abbruch</string>
+
     <string name="action_settings">Einstellungen</string>
     <string name="action_ephemupdate">Aktuelle Ephemeriden laden</string>
     <string name="action_firmware_update">Neue Ra-Firmware laden</string>
@@ -23,7 +26,6 @@
     <string name="fragment_dashboard_scanning">SCANNER</string>
     <string name="fragment_dashboard_battery">Batterie:</string>
     <string name="fragment_dashboard_dialog_smeter_style_title">S-Meter Darstellung</string>
-    <string name="fragment_dashboard_dialog_smeter_style_cancel">Abbruch</string>
     <string name="fragment_dashboard_monitor_state_content_description">Zeigt den Status der MonitorFunktion</string>
 
     <string name="fragment_dashboard_enter_frequency_hint">Empfangsfrequenz in MHz</string>
@@ -63,10 +65,7 @@
     <string name="fragment_map_action_jump_my_position">Springe zu eigener Position</string>
     <string name="fragment_map_landed">Gelandet</string>
     <string name="fragment_map_dialog_burst_altitude_title">Erwartete Gipfelhöhe eingeben</string>
-    <string name="fragment_map_dialog_burst_altitude_ok">Ok</string>
-    <string name="fragment_map_dialog_burst_altitude_cancel">Abbruch</string>
     <string name="fragment_map_dialog_landing_time_style_title">Anzeige Landezeitpunkt</string>
-    <string name="fragment_map_dialog_landing_time_style_cancel">Abbruch</string>
     <string name="fragment_map_fab_goto_my_position_content_description">Zur eigenen Position</string>
     <string name="fragment_map_fab_goto_sonde_content_description">Zur Sonde</string>
 
@@ -215,7 +214,6 @@
     <string name="firmware_update_dialog_confirmation_title">Firmware-Update</string>
     <string name="firmware_update_dialog_confirmation_message">Update jetzt durchführen?</string>
     <string name="firmware_update_dialog_confirmation_button_positive">START</string>
-    <string name="firmware_update_dialog_confirmation_button_negative">Abbruch</string>
     <string name="firmware_update_dialog_no_images">Keine Firmware (.hex) in</string>
     <string name="firmware_update_notification_title">Update der Firmware</string>
     <string name="firmware_update_notification_read_hex">Firmware-Hexdatei einlesen</string>
