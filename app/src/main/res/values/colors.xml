@@ -68,4 +68,6 @@
     <color name="ra_theme_dark_surfaceInverse">#e0e2ea</color>
     <color name="ra_theme_dark_onSurfaceInverse">#2d3037</color>
     <color name="ra_theme_dark_primaryInverse">#005faf</color>
+
+    <color name="ic_launcher_background">#f8aB35</color>
 </resources>
