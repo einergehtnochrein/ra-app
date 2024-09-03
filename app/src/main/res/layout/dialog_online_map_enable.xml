@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="java.util.Locale"/>
+        <variable
+            name="viewModel"
+            type="de.leckasemmel.sonde1.viewmodels.DialogOnlineMapEnableViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/heard_item_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="?attr/colorSurfaceContainerHigh"
+        >
+
+        <TextView
+            android:id="@+id/name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='Select Online Maps'
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginBottom="16dp"
+            style="@style/MaterialAlertDialog.Material3.Title.Text"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/name_map1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{viewModel.nameMap1}'
+                style="@style/MaterialAlertDialog.Material3.Body.Text"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/enable_map1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked='@={viewModel.enableMap1}'
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/name_map2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{viewModel.nameMap2}'
+                style="@style/MaterialAlertDialog.Material3.Body.Text"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/enable_map2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked='@={viewModel.enableMap2}'
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/name_map3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{viewModel.nameMap3}'
+                style="@style/MaterialAlertDialog.Material3.Body.Text"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/enable_map3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked='@={viewModel.enableMap3}'
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@string/dialog_cancel'
+                android:textAllCaps="true"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_ok"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@string/dialog_ok'
+                android:textAllCaps="true"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
