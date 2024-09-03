@@ -371,7 +371,7 @@ public class MainActivity extends AppCompatActivity
                         intent.putExtra("filename", mTargetInfo.firmwareName);
                         startService(intent);
                     })
-                    .setNegativeButton(getString(R.string.firmware_update_dialog_confirmation_button_negative), (dialog, which) -> {
+                    .setNegativeButton(getString(R.string.dialog_cancel), (dialog, which) -> {
                     })
                     .create().show();
         }
@@ -402,7 +402,7 @@ public class MainActivity extends AppCompatActivity
                         dashboardViewModel.setConnected(false);
                     }
                 })
-                .setNegativeButton(getString(R.string.firmware_update_dialog_confirmation_button_negative), (dialog, which) -> {
+                .setNegativeButton(getString(R.string.dialog_cancel), (dialog, which) -> {
                 })
                 .create().show();
     }

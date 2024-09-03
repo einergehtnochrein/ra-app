@@ -3,6 +3,9 @@
 
     <string name="title_activity_settings">Settings</string>
 
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_ephemupdate">Load up-to-date ephemerides</string>
     <string name="action_firmware_update">Load new Ra firmware</string>
@@ -23,7 +26,6 @@
     <string name="fragment_dashboard_scanning">SCANNER</string>
     <string name="fragment_dashboard_battery">Battery:</string>
     <string name="fragment_dashboard_dialog_smeter_style_title">S-Meter Style</string>
-    <string name="fragment_dashboard_dialog_smeter_style_cancel">Cancel</string>
     <string name="fragment_dashboard_monitor_state_content_description">Shows the state of the monitor function</string>
 
     <string name="fragment_dashboard_enter_frequency_hint">Receiver frequency in MHz</string>
@@ -63,10 +65,7 @@
     <string name="fragment_map_action_jump_my_position">Jump to my position</string>
     <string name="fragment_map_landed">Landed</string>
     <string name="fragment_map_dialog_burst_altitude_title">Enter burst altitude</string>
-    <string name="fragment_map_dialog_burst_altitude_ok">Ok</string>
-    <string name="fragment_map_dialog_burst_altitude_cancel">Cancel</string>
     <string name="fragment_map_dialog_landing_time_style_title">Landing time display</string>
-    <string name="fragment_map_dialog_landing_time_style_cancel">Cancel</string>
     <string name="fragment_map_fab_goto_my_position_content_description">Go to my position</string>
     <string name="fragment_map_fab_goto_sonde_content_description">Go to sonde</string>
 
@@ -215,7 +214,6 @@
     <string name="firmware_update_dialog_confirmation_title">Firmware Update</string>
     <string name="firmware_update_dialog_confirmation_message">Do firmware update now?</string>
     <string name="firmware_update_dialog_confirmation_button_positive">START</string>
-    <string name="firmware_update_dialog_confirmation_button_negative">Cancel</string>
     <string name="firmware_update_dialog_no_images">No firmware (.hex) found in</string>
     <string name="firmware_update_notification_title">Firmware update</string>
     <string name="firmware_update_notification_read_hex">Read firmware HEX file</string>

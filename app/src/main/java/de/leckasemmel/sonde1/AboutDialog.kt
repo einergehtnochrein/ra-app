@@ -61,7 +61,7 @@ class AboutDialog (val context: Context, private val info: RaComm.TargetInfo) {
             .setTitle(context.getString(R.string.dialog_about_title))
             .setCancelable(true)
             .setMessage(message)
-            .setPositiveButton("OK") {_, _ ->  }
+            .setPositiveButton(context.getString(R.string.dialog_ok)) {_, _ ->  }
             .create().show()
     }
 }

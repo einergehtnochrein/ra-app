@@ -291,10 +291,10 @@ public class MapViewModel extends ViewModel
                 .setTitle(context.getString(R.string.fragment_map_dialog_burst_altitude_title))
                 .setCancelable(true)
                 .setView(editLayout)
-                .setPositiveButton(context.getString(R.string.fragment_map_dialog_burst_altitude_ok), (dialog, whichButton) -> {
+                .setPositiveButton(context.getString(R.string.dialog_ok), (dialog, whichButton) -> {
                     predictBurstAltitude.setValue(Double.parseDouble(editField.getText().toString()));
                 })
-                .setNegativeButton(context.getString(R.string.fragment_map_dialog_burst_altitude_cancel), (dialog, whichButton) -> dialog.cancel())
+                .setNegativeButton(context.getString(R.string.dialog_cancel), (dialog, whichButton) -> dialog.cancel())
                 .show()
                 ;
 
@@ -319,7 +319,7 @@ public class MapViewModel extends ViewModel
                     }
                     dialog.cancel();
                 })
-                .setNegativeButton(context.getString(R.string.fragment_map_dialog_landing_time_style_cancel), (dialog, whichButton) -> dialog.cancel())
+                .setNegativeButton(context.getString(R.string.dialog_cancel), (dialog, whichButton) -> dialog.cancel())
                 .show()
         ;
 
