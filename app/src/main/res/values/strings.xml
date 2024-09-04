@@ -155,6 +155,23 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string name="pref_map_online_maps">Online Maps</string>
+    <string name="pref_map_category_map1">Map 1</string>
+    <string name="pref_map_category_map2">Map 2</string>
+    <string name="pref_map_category_map3">Map 3</string>
+    <string name="pref_map_online_enable">Use this map</string>
+    <string name="pref_map_online_name">Name of map</string>
+    <string name="pref_map_online_server1">Server 1</string>
+    <string name="pref_map_online_server2">Server 2</string>
+    <string name="pref_map_online_server3">Server 3</string>
+    <string name="pref_map_online_server_protocol">Protocol</string>
+    <string name="pref_map_online_server_port">Port</string>
+    <string name="pref_map_online_server_base_url">Base URL</string>
+    <string name="pref_map_online_agent">Agent</string>
+    <string name="pref_map_online_tile_size">Tile Size</string>
+    <string name="pref_map_online_min_zoom_level">Min Zoom Level</string>
+    <string name="pref_map_online_max_zoom_level">Max Zoom Level</string>
+    <string name="pref_map_online_credits">Credits</string>
 
     <string name="pref_category_look">Display preference</string>
     <string name="pref_look_smeter_style">S-Meter</string>

@@ -180,7 +180,23 @@
     <string-array name="pref_maps_files_default">
         <item>germany.map</item>
     </string-array>
-
+    <string name="pref_map_online_maps">Online-Karten</string>
+    <string name="pref_map_category_map1">Karte 1</string>
+    <string name="pref_map_category_map2">Karte 2</string>
+    <string name="pref_map_category_map3">Karte 3</string>
+    <string name="pref_map_online_enable">Karte verwenden</string>
+    <string name="pref_map_online_name">Name der Karte</string>
+    <string name="pref_map_online_server1">Server 1</string>
+    <string name="pref_map_online_server2">Server 2</string>
+    <string name="pref_map_online_server3">Server 3</string>
+    <string name="pref_map_online_server_protocol">Protokoll</string>
+    <string name="pref_map_online_server_port">Port</string>
+    <string name="pref_map_online_server_base_url">Basis-URL</string>
+    <string name="pref_map_online_agent">Agent</string>
+    <string name="pref_map_online_tile_size">Kachelgröße</string>
+    <string name="pref_map_online_min_zoom_level">Min Zoom</string>
+    <string name="pref_map_online_max_zoom_level">Max Zoom</string>
+    <string name="pref_map_online_credits">Credits</string>
 
     <string name="pref_category_system">System</string>
     <string name="pref_system_firmware_path">Suchpfad für Firmware</string>

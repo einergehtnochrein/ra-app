@@ -5,16 +5,16 @@
     android:key="prefScreenMain"
     >
 
-    <PreferenceCategory android:title="Map 1" >
+    <PreferenceCategory android:title='@string/pref_map_category_map1' >
         <SwitchPreferenceCompat
             app:key="prefMapOnline1Enable"
-            app:title="Use this map"
+            app:title='@string/pref_map_online_enable'
             android:defaultValue="true"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1Name"
-            android:title="Name of online map 1"
+            android:title='@string/pref_map_online_name'
             android:dependency="prefMapOnline1Enable"
             />
 
@@ -29,82 +29,82 @@
 
         <EditTextPreference
             android:key="prefMapOnline1ServerA"
-            android:title="Server 1"
+            android:title='@string/pref_map_online_server1'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1ServerB"
-            android:title="Server 2"
+            android:title='@string/pref_map_online_server2'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1ServerC"
-            android:title="Server 3"
+            android:title='@string/pref_map_online_server3'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1ServerProtocol"
-            android:title="Server Protocol"
+            android:title='@string/pref_map_online_server_protocol'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1ServerPort"
-            android:title="Server Port"
+            android:title='@string/pref_map_online_server_port'
             android:dependency="prefMapOnline1Enable"
             android:maxLength="5"
             />
 
         <EditTextPreference
-            android:key="prefMapOnline1Agent"
-            android:title="Agent"
+            android:key="prefMapOnline1ServerBaseUrl"
+            android:title='@string/pref_map_online_server_base_url'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
-            android:key="prefMapOnline1ServerBaseUrl"
-            android:title="Server Base URL"
+            android:key="prefMapOnline1Agent"
+            android:title='@string/pref_map_online_agent'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1TileSize"
-            android:title="Tile Size"
+            android:title='@string/pref_map_online_tile_size'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1MinZoom"
-            android:title="Min Zoom Level"
+            android:title='@string/pref_map_online_min_zoom_level'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1MaxZoom"
-            android:title="Max Zoom Level"
+            android:title='@string/pref_map_online_max_zoom_level'
             android:dependency="prefMapOnline1Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline1Credits"
-            android:title="Credits"
+            android:title='@string/pref_map_online_credits'
             android:dependency="prefMapOnline1Enable"
             />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Map 2" >
+    <PreferenceCategory android:title='@string/pref_map_category_map2' >
         <SwitchPreferenceCompat
             app:key="prefMapOnline2Enable"
-            app:title="Use this map"
+            app:title='@string/pref_map_online_enable'
             android:defaultValue="false"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2Name"
-            android:title="Name of online map 2"
+            android:title='@string/pref_map_online_name'
             android:dependency="prefMapOnline2Enable"
             />
 
@@ -119,82 +119,82 @@
 
         <EditTextPreference
             android:key="prefMapOnline2ServerA"
-            android:title="Server 1"
+            android:title='@string/pref_map_online_server1'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2ServerB"
-            android:title="Server 2"
+            android:title='@string/pref_map_online_server2'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2ServerC"
-            android:title="Server 3"
+            android:title='@string/pref_map_online_server3'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2ServerProtocol"
-            android:title="Server Protocol"
+            android:title='@string/pref_map_online_server_protocol'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2ServerPort"
-            android:title="Server Port"
+            android:title='@string/pref_map_online_server_port'
             android:dependency="prefMapOnline2Enable"
             android:maxLength="5"
             />
 
         <EditTextPreference
-            android:key="prefMapOnline2Agent"
-            android:title="Agent"
+            android:key="prefMapOnline2ServerBaseUrl"
+            android:title='@string/pref_map_online_server_base_url'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
-            android:key="prefMapOnline2ServerBaseUrl"
-            android:title="Server Base URL"
+            android:key="prefMapOnline2Agent"
+            android:title='@string/pref_map_online_agent'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2TileSize"
-            android:title="Tile Size"
+            android:title='@string/pref_map_online_tile_size'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2MinZoom"
-            android:title="Min Zoom Level"
+            android:title='@string/pref_map_online_min_zoom_level'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2MaxZoom"
-            android:title="Max Zoom Level"
+            android:title='@string/pref_map_online_max_zoom_level'
             android:dependency="prefMapOnline2Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline2Credits"
-            android:title="Credits"
+            android:title='@string/pref_map_online_credits'
             android:dependency="prefMapOnline2Enable"
             />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Map 3" >
+    <PreferenceCategory android:title='@string/pref_map_category_map3' >
         <SwitchPreferenceCompat
             app:key="prefMapOnline3Enable"
-            app:title="Use this map"
+            app:title='@string/pref_map_online_enable'
             android:defaultValue="false"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3Name"
-            android:title="Name of online map 3"
+            android:title='@string/pref_map_online_name'
             android:dependency="prefMapOnline3Enable"
             />
 
@@ -209,68 +209,68 @@
 
         <EditTextPreference
             android:key="prefMapOnline3ServerA"
-            android:title="Server 1"
+            android:title='@string/pref_map_online_server1'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3ServerB"
-            android:title="Server 2"
+            android:title='@string/pref_map_online_server2'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3ServerC"
-            android:title="Server 3"
+            android:title='@string/pref_map_online_server3'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3ServerProtocol"
-            android:title="Server Protocol"
+            android:title='@string/pref_map_online_server_protocol'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3ServerPort"
-            android:title="Server Port"
+            android:title='@string/pref_map_online_server_port'
             android:dependency="prefMapOnline3Enable"
             android:maxLength="5"
             />
 
         <EditTextPreference
-            android:key="prefMapOnline3Agent"
-            android:title="Agent"
+            android:key="prefMapOnline3ServerBaseUrl"
+            android:title='@string/pref_map_online_server_base_url'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
-            android:key="prefMapOnline3ServerBaseUrl"
-            android:title="Server Base URL"
+            android:key="prefMapOnline3Agent"
+            android:title='@string/pref_map_online_agent'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3TileSize"
-            android:title="Tile Size"
+            android:title='@string/pref_map_online_tile_size'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3MinZoom"
-            android:title="Min Zoom Level"
+            android:title='@string/pref_map_online_min_zoom_level'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3MaxZoom"
-            android:title="Max Zoom Level"
+            android:title='@string/pref_map_online_max_zoom_level'
             android:dependency="prefMapOnline3Enable"
             />
 
         <EditTextPreference
             android:key="prefMapOnline3Credits"
-            android:title="Credits"
+            android:title='@string/pref_map_online_credits'
             android:dependency="prefMapOnline3Enable"
             />
     </PreferenceCategory>
