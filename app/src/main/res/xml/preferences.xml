@@ -71,7 +71,7 @@
             />
 
         <Preference
-            android:title="Online Maps"
+            android:title='@string/pref_map_online_maps'
             android:icon="@drawable/baseline_layers_24"
             app:fragment="de.leckasemmel.sonde1.SettingsFragmentOnlineMaps"
             />

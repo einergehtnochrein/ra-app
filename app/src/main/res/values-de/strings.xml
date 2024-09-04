@@ -80,17 +80,15 @@
     <string name="fragment_heard_label_temperature_cpu"><![CDATA[T<sub><small>CPU</small></sub>: ]]></string>
     <string name="fragment_heard_label_temperature_u"><![CDATA[T<sub><small>U</small></sub>=%1$.1f°C]]></string>
     <string name="fragment_heard_label_c50_heating">HEIZUNG</string>
-    <string name="fragment_heard_label_c50_tref"><![CDATA[T<sub><small>ref</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_tu"><![CDATA[T<sub><small>Hum</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_tch"><![CDATA[T<sub><small>Ch</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_temperatureO3"><![CDATA[T<sub><small>O3air</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_temperature_ref"><![CDATA[T<sub><small>ref</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_c50_temperature_air_duct"><![CDATA[T<sub><small>AD</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_c50_temperature_o3"><![CDATA[T<sub><small>O3air</small></sub>=%1$.1f°C]]></string>
     <string name="fragment_heard_label_c50_currentO3"><![CDATA[I<sub><small>O3</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_voltage_battery"><![CDATA[V<sub><small>BAT</small></sub>: ]]></string>
     <string name="fragment_heard_label_c50_voltage_rf_power"><![CDATA[V<sub><small>RF</small></sub>: ]]></string>
     <string name="fragment_heard_label_c50_state">State:</string>
-    <string name="fragment_heard_label_c50_firmware_version">FW:</string>
+    <string name="fragment_heard_label_c50_firmware_version">FW=%.3f</string>
     <string name="fragment_heard_label_c50_gps_interferer">GPS IF:</string>
-    <string name="fragment_heard_label_c50_serial_sensor">Sensor: #</string>
+    <string name="fragment_heard_label_c50_serial_sensor">Sensor=#%d</string>
     <string name="fragment_heard_label_cf06_pdop">PDOP=%.2f</string>
     <string name="fragment_heard_label_m20_board_temperature"><![CDATA[T<sub><small>PCB</small></sub>=%1$.1f°C]]></string>
     <string name="fragment_heard_label_rs41_gps_jammer"><![CDATA[GPS<sub><small>jam</small></sub>: ]]></string>
@@ -180,7 +178,23 @@
     <string-array name="pref_maps_files_default">
         <item>germany.map</item>
     </string-array>
-
+    <string name="pref_map_online_maps">Online-Karten</string>
+    <string name="pref_map_category_map1">Karte 1</string>
+    <string name="pref_map_category_map2">Karte 2</string>
+    <string name="pref_map_category_map3">Karte 3</string>
+    <string name="pref_map_online_enable">Karte verwenden</string>
+    <string name="pref_map_online_name">Name der Karte</string>
+    <string name="pref_map_online_server1">Server 1</string>
+    <string name="pref_map_online_server2">Server 2</string>
+    <string name="pref_map_online_server3">Server 3</string>
+    <string name="pref_map_online_server_protocol">Protokoll</string>
+    <string name="pref_map_online_server_port">Port</string>
+    <string name="pref_map_online_server_base_url">Basis-URL</string>
+    <string name="pref_map_online_agent">Agent</string>
+    <string name="pref_map_online_tile_size">Kachelgröße</string>
+    <string name="pref_map_online_min_zoom_level">Min Zoom</string>
+    <string name="pref_map_online_max_zoom_level">Max Zoom</string>
+    <string name="pref_map_online_credits">Credits</string>
 
     <string name="pref_category_system">System</string>
     <string name="pref_system_firmware_path">Suchpfad für Firmware</string>
@@ -233,6 +247,9 @@
     <string name="dialog_about_no">nein</string>
     <string name="dialog_about_unknown">unbekannt</string>
     <string name="dialog_about_loader_version">Loader version:</string>
+
+    <!-- Online map enable dialog -->
+    <string name="dialog_online_map_title">Online-Karten</string>
 
     <!-- Misc -->
     <string-array name="empty_array" />

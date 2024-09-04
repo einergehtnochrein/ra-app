@@ -231,8 +231,12 @@ public class SondeListItem {
     public void setGroundSpeed(double speed) { scalars.groundSpeed = speed; }
     public double getDirection() { return scalars.direction; }
     public void setDirection(double direction) { scalars.direction = direction; }
+    public double getHdop() { return scalars.hdop; }
+    public void setHdop(double value) { scalars.hdop = value; }
     public double getPdop() { return scalars.pdop; }
     public void setPdop(double value) { scalars.pdop = value; }
+    public double getVdop() { return scalars.vdop; }
+    public void setVdop(double value) { scalars.vdop = value; }
 
     public double getPressure() { return scalars.pressure; }
     public void setPressure(double pressure) { scalars.pressure = pressure; }
@@ -329,4 +333,17 @@ public class SondeListItem {
     public void setMeiseiSerialPcb(String value) { scalars.meiseiSerialPcb = value; }
     public double getMeiseiTemperatureTx() { return scalars.meiseiTemperatureTx; }
     public void setMeiseiTemperatureTx(double value) { scalars.meiseiTemperatureTx = value; }
+
+    public int getC50GpsInterferer() { return scalars.c50gpsInterferer; }
+    public void setC50GpsInterferer(int value) { scalars.c50gpsInterferer = value; }
+    public double getC50TemperatureRef() { return scalars.c50TemperatureRef; }
+    public void setC50TemperatureRef(double value) { scalars.c50TemperatureRef = value; }
+    public double getC50TemperatureChamber() { return scalars.c50TemperatureChamber; }
+    public void setC50TemperatureChamber(double value) { scalars.c50TemperatureChamber = value; }
+    public double getC50TemperatureO3() { return scalars.c50TemperatureO3; }
+    public void setC50TemperatureO3(double value) { scalars.c50TemperatureO3 = value; }
+    public int getC50FirmwareVersion() { return scalars.c50firmwareVersion; }
+    public void setC50FirmwareVersion(int value) { scalars.c50firmwareVersion = value; }
+    public int getC50serialSensor() { return scalars.c50serialSensor; }
+    public void setC50serialSensor(int value) { scalars.c50serialSensor = value; }
 }

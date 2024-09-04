@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="androidx.core.text.HtmlCompat"/>
         <import type="java.util.Locale"/>
         <variable
             name="item"
@@ -23,7 +24,8 @@
             android:id="@+id/heard_group_gps_quality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <TextView
                 android:id="@+id/heard_item_hdop"
@@ -31,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text='@{String.format(Locale.US, "HDOP=%.2f", item.hdop)}'
                 />
 
             <TextView
@@ -39,6 +42,45 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text='@{String.format(Locale.US, "VDOP=%.2f", item.vdop)}'
+                />
+
+            <TextView
+                android:id="@+id/heard_item_gps_interferer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginEnd="10dp"
+                android:text='@{String.format(Locale.US, "GPS-IF=%d", item.c50GpsInterferer)}'
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/heard_group_misc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility='@{(item.c50serialSensor == 0) &amp;&amp; (item.c50serialSensor == 0) ? View.GONE : View.VISIBLE}'
+            >
+
+            <TextView
+                android:id="@+id/heard_item_firmware"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility='@{item.c50FirmwareVersion == 0 ? View.GONE : View.VISIBLE}'
+                android:text='@{String.format(Locale.US, @string/fragment_heard_label_c50_firmware_version, (float)item.c50FirmwareVersion / 1000.0f)}'
+                />
+
+            <TextView
+                android:id="@+id/heard_item_serial_sensor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginEnd="10dp"
+                android:visibility='@{item.c50serialSensor == 0 ? View.GONE : View.VISIBLE}'
+                android:text='@{String.format(Locale.US, @string/fragment_heard_label_c50_serial_sensor, item.c50serialSensor)}'
                 />
         </LinearLayout>
 
@@ -47,30 +89,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            >
 
             <TextView
-                android:id="@+id/heard_item_tempref"
+                android:id="@+id/heard_item_temp_ref"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_marginEnd="10dp"
+                android:visibility='@{Double.isNaN(item.c50TemperatureRef) ? View.GONE : View.VISIBLE}'
+                android:text='@{HtmlCompat.fromHtml(String.format(Locale.US, @string/fragment_heard_label_c50_temperature_ref, item.c50TemperatureRef), HtmlCompat.FROM_HTML_MODE_LEGACY)}'
                 />
 
             <TextView
-                android:id="@+id/heard_item_tempu"
+                android:id="@+id/heard_item_temp_air_duct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginEnd="10dp"
+                android:visibility='@{Double.isNaN(item.c50TemperatureChamber) ? View.GONE : View.VISIBLE}'
+                android:text='@{HtmlCompat.fromHtml(String.format(Locale.US, @string/fragment_heard_label_c50_temperature_air_duct, item.c50TemperatureChamber), HtmlCompat.FROM_HTML_MODE_LEGACY)}'
                 />
 
             <TextView
-                android:id="@+id/heard_item_tempchamber"
+                android:id="@+id/heard_item_temp_o3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_marginEnd="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility='@{Double.isNaN(item.c50TemperatureO3) ? View.GONE : View.VISIBLE}'
+                android:text='@{HtmlCompat.fromHtml(String.format(Locale.US, @string/fragment_heard_label_c50_temperature_o3, item.c50TemperatureO3), HtmlCompat.FROM_HTML_MODE_LEGACY)}'
                 />
         </LinearLayout>
 
@@ -82,15 +130,7 @@
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/heard_item_vbat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                />
-
-            <TextView
-                android:id="@+id/heard_item_rfpwrdetect"
+                android:id="@+id/heard_item_rf_pwr_detect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -104,57 +144,9 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_marginEnd="10dp"
                 />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/heard_group_ozone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
 
             <TextView
-                android:id="@+id/heard_item_tempo3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                />
-
-            <TextView
-                android:id="@+id/heard_item_currento3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_marginEnd="10dp"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/heard_group_misc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/heard_item_firmware"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                />
-
-            <TextView
-                android:id="@+id/heard_item_gpsinterferer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_marginEnd="10dp"
-                />
-
-            <TextView
-                android:id="@+id/heard_item_serial_sensor"
+                android:id="@+id/heard_item_current_o3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
