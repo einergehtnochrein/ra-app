@@ -80,17 +80,15 @@
     <string name="fragment_heard_label_temperature_cpu"><![CDATA[T<sub><small>CPU</small></sub>: ]]></string>
     <string name="fragment_heard_label_temperature_u"><![CDATA[T<sub><small>U</small></sub>=%1$.1f°C]]></string>
     <string name="fragment_heard_label_c50_heating">HEIZUNG</string>
-    <string name="fragment_heard_label_c50_tref"><![CDATA[T<sub><small>ref</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_tu"><![CDATA[T<sub><small>Hum</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_tch"><![CDATA[T<sub><small>Ch</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_temperatureO3"><![CDATA[T<sub><small>O3air</small></sub>: ]]></string>
+    <string name="fragment_heard_label_c50_temperature_ref"><![CDATA[T<sub><small>ref</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_c50_temperature_air_duct"><![CDATA[T<sub><small>AD</small></sub>=%1$.1f°C]]></string>
+    <string name="fragment_heard_label_c50_temperature_o3"><![CDATA[T<sub><small>O3air</small></sub>=%1$.1f°C]]></string>
     <string name="fragment_heard_label_c50_currentO3"><![CDATA[I<sub><small>O3</small></sub>: ]]></string>
-    <string name="fragment_heard_label_c50_voltage_battery"><![CDATA[V<sub><small>BAT</small></sub>: ]]></string>
     <string name="fragment_heard_label_c50_voltage_rf_power"><![CDATA[V<sub><small>RF</small></sub>: ]]></string>
     <string name="fragment_heard_label_c50_state">State:</string>
-    <string name="fragment_heard_label_c50_firmware_version">FW:</string>
+    <string name="fragment_heard_label_c50_firmware_version">FW=%.3f</string>
     <string name="fragment_heard_label_c50_gps_interferer">GPS IF:</string>
-    <string name="fragment_heard_label_c50_serial_sensor">Sensor: #</string>
+    <string name="fragment_heard_label_c50_serial_sensor">Sensor=#%d</string>
     <string name="fragment_heard_label_cf06_pdop">PDOP=%.2f</string>
     <string name="fragment_heard_label_m20_board_temperature"><![CDATA[T<sub><small>PCB</small></sub>=%1$.1f°C]]></string>
     <string name="fragment_heard_label_rs41_gps_jammer"><![CDATA[GPS<sub><small>jam</small></sub>: ]]></string>
