@@ -25,7 +25,7 @@
             android:id="@+id/name_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='Select Online Maps'
+            android:text='@string/dialog_online_map_title'
             android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="16dp"
             style="@style/MaterialAlertDialog.Material3.Title.Text"

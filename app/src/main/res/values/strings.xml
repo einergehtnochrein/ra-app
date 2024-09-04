@@ -234,6 +234,9 @@
     <string name="dialog_about_unknown">not known</string>
     <string name="dialog_about_loader_version">Loader version:</string>
 
+    <!-- Online map enable dialog -->
+    <string name="dialog_online_map_title">Select Online Maps</string>
+
     <!-- Misc -->
     <string-array name="empty_array" />
 
