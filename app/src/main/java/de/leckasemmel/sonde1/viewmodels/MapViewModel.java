@@ -151,10 +151,13 @@ public class MapViewModel extends ViewModel
         if (focusSondeInvalid) {
             // If only one sonde left in heard list, set focus sonde automatically to this sonde.
             if (heardListModel.getItems().size() == 1) {
-                setFocusSonde(heardListModel.getItems().get(0));
-                setCenterPosition(new LatLong(
-                        mFocusSonde.getValue().position.getLatitude(),
-                        mFocusSonde.getValue().position.getLongitude()));
+                SondeListItem item = heardListModel.getItems().get(0);
+                double latitude = item.getLatitude();
+                double longitude = item.getLongitude();
+                if (!Double.isNaN(latitude) && !Double.isNaN(longitude)) {
+                    setFocusSonde(item);
+                    setCenterPosition(new LatLong(latitude, longitude));
+                }
             }
         }
         else {
