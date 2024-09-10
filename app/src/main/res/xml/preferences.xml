@@ -108,5 +108,11 @@
             android:key="prefSystemPredictUrl"
             android:title="@string/pref_system_predict_url"
             />
+
+        <SwitchPreferenceCompat
+            app:key="prefSystemLogRawFrames"
+            app:title="@string/pref_system_log_raw_frames"
+            android:defaultValue="true"
+            />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

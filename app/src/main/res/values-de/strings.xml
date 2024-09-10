@@ -200,9 +200,7 @@
     <string name="pref_system_firmware_path">Suchpfad für Firmware</string>
     <string name="pref_system_rinex_url">URL für RINEX-Download</string>
     <string name="pref_system_predict_url">URL for Tawhiri Predictor</string>
-    <string name="pref_system_log_gpx">GPX-Tracks anlegen</string>
-    <string name="pref_system_log_gpx_path">Pfad für GPX-Tracks</string>
-    <string name="pref_system_log_gpx_persistence">Archivierungsdauer GPX-Daten</string>
+    <string name="pref_system_log_raw_frames">Empfangene Rohdaten speichern</string>
 
     <!-- Notifications -->
     <string name="notify_map_not_found">Karte %s nicht gefunden</string>

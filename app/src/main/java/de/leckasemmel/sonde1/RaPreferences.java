@@ -28,6 +28,7 @@ public class RaPreferences {
     public final static String KEY_PREF_SYSTEM_FIRMWARE_PATH = "prefSystemFirmwarePath";
     public final static String KEY_PREF_SYSTEM_RINEX_URL = "prefSystemRinexUrl";
     public final static String KEY_PREF_SYSTEM_PREDICT_URL = "prefSystemPredictUrl";
+    public final static String KEY_PREF_SYSTEM_LOG_RAW_FRAMES = "prefSystemLogRawFrames";
 
     public final static String KEY_PREF_MAP_ONLINE1_ENABLE = "prefMapOnline1Enable";
     public final static String KEY_PREF_MAP_ONLINE1_NAME = "prefMapOnline1Name";
@@ -227,6 +228,9 @@ public class RaPreferences {
 
     public String getSystemFirmwarePath() {
         return mSharedPref.getString(KEY_PREF_SYSTEM_FIRMWARE_PATH, "");
+    }
+    public boolean getSystemLogRawFrames() {
+        return mSharedPref.getBoolean(KEY_PREF_SYSTEM_LOG_RAW_FRAMES, false);
     }
 
     public String getMapPredictBurstAltitude() {
