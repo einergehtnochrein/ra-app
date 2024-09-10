@@ -45,6 +45,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -309,6 +313,20 @@ public class MainActivity extends AppCompatActivity
                             mXdataCollection.put(
                                     xdata.chainPosition,
                                     new SondeListItem.Xdata(xdata.instrument, xdata.message));
+                        } else if (parsed.getClass() == RaComm.RawFrameData.class) {
+                            RaComm.RawFrameData rawFrameData = (RaComm.RawFrameData) parsed;
+                            SondeListItem item = heardModel.heardListFind(rawFrameData.id);
+                            if (item != null) {
+                                String name = item.getName();
+                                if (!name.isEmpty()) {
+                                    saveLogLine(
+                                            item.getSondeDecoder(),
+                                            name,
+                                            item.getFrequency(),
+                                            rawFrameData.logLine
+                                    );
+                                }
+                            }
                         } else if (parsed.getClass() == RaComm.FirmwareUpdateResponse.class) {
                             RaComm.FirmwareUpdateResponse response = (RaComm.FirmwareUpdateResponse) parsed;
                             if ((response.phase == 0) && (response.param1 == 0)) {
@@ -333,6 +351,56 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+
+    private void saveLogLine(
+            SondeListItem.SondeDecoder decoder,
+            String name,
+            double frequency,
+            String logLine) {
+
+        if (!mRaPrefs.getSystemLogRawFrames()) {
+            return;
+        }
+
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        String fileName = switch (decoder) {
+            case SONDE_DECODER_BEACON -> "beacon_" + name + ".txt";
+            case SONDE_DECODER_C34_C50 -> "srsc_" + name + ".txt";
+            case SONDE_DECODER_GRAW -> "dfm_" + name + ".txt";
+            case SONDE_DECODER_IMET ->
+                    "imet_" + dateFormat.format(date) + "_" + String.format(Locale.US, "%6.0f", frequency / 1000.0) + ".txt";
+            case SONDE_DECODER_IMET54 -> "imet54_" + name + ".txt";
+            case SONDE_DECODER_JINYANG -> "jinyang_" + dateFormat.format(date) + ".txt";
+            case SONDE_DECODER_M10 ->
+                    "m10_" + name.replace("-", "") + "_" + dateFormat.format(date) + ".txt";
+            case SONDE_DECODER_M20 ->
+                    "m20_" + name.replace("-", "") + "_" + dateFormat.format(date) + ".txt";
+            case SONDE_DECODER_MEISEI -> "meisei_" + dateFormat.format(date) + "_" + name + ".txt";
+            case SONDE_DECODER_MRZ -> "mrz_" + dateFormat.format(date) + "_" + name + ".txt";
+            case SONDE_DECODER_PILOT -> "pilot_" + dateFormat.format(date) + ".txt";
+            case SONDE_DECODER_RS41 -> "rs41_" + name + ".txt";
+            case SONDE_DECODER_RS92 -> "rs92_" + name + ".txt";
+            default -> "";
+        };
+
+        // NOTE: No need to support old devices for this
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (!fileName.isEmpty()) {
+                try {
+                    Files.write(
+                            Paths.get(
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath(),
+                                    "ralog",
+                                    fileName),
+                            logLine.getBytes(),
+                            StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                } catch(IOException e) {
+                    Log.d(TAG, "Error writing raw log (" + decoder + ")");
+                }
+            }
+        }
+    }
 /*
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {

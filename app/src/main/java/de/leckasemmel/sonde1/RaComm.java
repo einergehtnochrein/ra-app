@@ -106,6 +106,15 @@ public class RaComm {
         public AudioSamples(String value) {this.uuEncodedSamples = value;}
     }
 
+    public static class RawFrameData {
+        long id;
+        String logLine;
+        public RawFrameData(long id, String logLine) {
+            this.id = id;
+            this.logLine = logLine;
+        }
+    }
+
     private HashMap<Integer, SondeListItem.SondeDecoder> map1 = new HashMap<Integer, SondeListItem.SondeDecoder>() {{
         put(0  , SondeListItem.SondeDecoder.SONDE_DECODER_RS92);
         put(1  , SondeListItem.SondeDecoder.SONDE_DECODER_RS41);
@@ -197,6 +206,20 @@ public class RaComm {
         return value;
     }
 
+    private long safeHexLongFromStringArray(String[] payload, int index, long defaultValue) {
+        long value;
+        try {
+            if (index >= payload.length) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
+            value = Long.parseLong(payload[index], 16);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            value = defaultValue;
+        }
+
+        return value;
+    }
+
     private double safeDoubleFromStringArray(String[] payload, int index, double defaultValue) {
         double value;
         try {
@@ -223,6 +246,7 @@ public class RaComm {
         }
         //TODO checksum
 
+        String raw = "";
         Object retVal = null;
 
         // Separate opcode and payload fields
@@ -403,6 +427,212 @@ public class RaComm {
                         }
 
                         retVal = partialItem;
+                    }
+
+                    if (infoType == 1) {    // T=1
+                        switch (decoder) {
+                            case SONDE_DECODER_RS92:
+                                raw = safeStringFromStringArray(payload, 6, "");
+                                if (raw.length() == 234) {
+                                    StringBuilder logLine = new StringBuilder("10 ");
+                                    for (int i = 0; i < 234/2; i++) {
+                                        logLine.append(raw.substring(2 * i, 2 * (i + 1)));
+                                    }
+                                    logLine.append("2A 2A 2A 2A 2A 00\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
+                                break;
+
+                            case SONDE_DECODER_RS41:
+                                raw = safeStringFromStringArray(payload, 6, "");
+                                if ((raw.length() % 4) == 0) {
+                                    StringBuilder logLine = new StringBuilder();
+                                    byte[] uu;
+                                    byte[] bb = new byte[3];
+                                    for (int k = 0; k < raw.length(); k += 4) {
+                                        uu = raw.substring(k, k + 4).getBytes();
+
+                                        for (int kk = 0; kk < 4; kk++) {
+                                            if (uu[kk] == 0x20) {
+                                                uu[kk] = 0x2C;
+                                            }
+                                            uu[kk] = (byte) ((uu[kk] & ~0x40) ^ 0x20);
+                                        }
+
+                                        bb[0] = (byte) ((uu[0] & 0x3F) | ((uu[1] << 6) & 0xC0));
+                                        bb[1] = (byte) (((uu[1] >> 2) & 0x0F) | ((uu[2] << 4) & 0xF0));
+                                        bb[2] = (byte) (((uu[2] >> 4) & 0x03) | ((uu[3] << 2) & 0xFC));
+
+                                        logLine.append(String.format(
+                                                Locale.US, "%02X %02X %02X ",
+                                                bb[0],
+                                                bb[1],
+                                                bb[2]));
+                                    }
+                                    logLine.append("\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
+                                break;
+
+                            case SONDE_DECODER_GRAW:
+                                raw = safeStringFromStringArray(payload, 4, "");
+                                if (raw.length() == 33) {
+                                    String logLine = String.format(
+                                            Locale.US, "%s %s %s t=%d\n",
+                                            raw.substring(0, 7),
+                                            raw.substring(7, 20),
+                                            raw.substring(20, 33),
+                                            System.nanoTime() / 1000000
+                                            );
+
+                                    retVal = new RawFrameData(partialItem.id, logLine);
+                                }
+                                break;
+
+                            case SONDE_DECODER_BEACON:
+                                raw = safeStringFromStringArray(payload, 4, "");
+                                if (raw.length() == 30) {
+                                    String logLine = String.format(
+                                            Locale.US, "%s t=%d\n",
+                                            raw,
+                                            System.nanoTime() / 1000000
+                                    );
+
+                                    retVal = new RawFrameData(partialItem.id, logLine);
+                                }
+                                break;
+
+                            case SONDE_DECODER_MEISEI:
+                                retVal = new RawFrameData(
+                                        partialItem.id,
+                                        String.format(
+                                                Locale.US, "%s %s t=%d\n",
+                                                safeStringFromStringArray(payload, 4, ""),
+                                                safeStringFromStringArray(payload, 5, ""),
+                                                System.nanoTime() / 1000000
+                                        ));
+                                break;
+
+                            case SONDE_DECODER_JINYANG, SONDE_DECODER_IMET:
+                                retVal = new RawFrameData(
+                                        partialItem.id,
+                                        String.format(
+                                                Locale.US, "%s t=%d\n",
+                                                safeStringFromStringArray(payload, 4, ""),
+                                                System.nanoTime() / 1000000
+                                        ));
+                                break;
+
+                            case SONDE_DECODER_M10:
+                                raw = safeStringFromStringArray(payload, 5, "");
+                                if (raw.length() > 50) {
+                                    StringBuilder logLine = new StringBuilder("00 00 C0 64");
+                                    for (int i = 0; i < raw.length() / 2; i++) {
+                                        logLine.append(" ");
+                                        logLine.append(raw.substring(2 * i, 2 * (i + 1)));
+                                    }
+                                    logLine.append("\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
+                                break;
+
+                            case SONDE_DECODER_M20:
+                                raw = safeStringFromStringArray(payload, 5, "");
+                                if (raw.length() > 50) {
+                                    StringBuilder logLine = new StringBuilder("00 00 C0 45");
+                                    for (int i = 0; i < raw.length() / 2; i++) {
+                                        logLine.append(" ");
+                                        logLine.append(raw.substring(2 * i, 2 * (i + 1)));
+                                    }
+                                    logLine.append("\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
+                                break;
+
+                            case SONDE_DECODER_C34_C50:
+                                int channel = safeIntFromStringArray(payload, 4, -1);
+                                if ((channel >= 0) && (channel <= 255)) {
+                                    long value = safeHexLongFromStringArray(payload, 5, 0);
+                                    value = (value & 0xff) << 24 | (value & 0xff00) << 8 | (value & 0xff0000) >> 8 | (value >> 24) & 0xff;
+                                    long crc1 = channel;
+                                    long crc2 = crc1;
+                                    crc1 = (crc1 + ((value >> 24) & 0xFF)) & 0xFF;
+                                    crc2 = (crc2 + crc1) & 0xFF;
+                                    crc1 = (crc1 + ((value >> 16) & 0xFF)) & 0xFF;
+                                    crc2 = (crc2 + crc1) & 0xFF;
+                                    crc1 = (crc1 + ((value >> 8) & 0xFF)) & 0xFF;
+                                    crc2 = (crc2 + crc1) & 0xFF;
+                                    crc1 = (crc1 + ((value) & 0xFF)) & 0xFF;
+                                    crc2 = (crc2 + crc1) & 0xFF;
+                                    crc2 = crc2 ^ 0xFF;
+
+                                    retVal = new RawFrameData(
+                                            partialItem.id,
+                                            String.format(
+                                                    Locale.US, "00FF %02X %08X %02X%02X t=%d\n",
+                                                    channel,
+                                                    value,
+                                                    crc1,
+                                                    crc2,
+                                                    System.nanoTime() / 1000000
+                                            ));
+                                }
+                                break;
+
+                            case SONDE_DECODER_IMET54:
+                                raw = safeStringFromStringArray(payload, 6, "");
+                                if ((raw.length() % 4) == 0) {
+                                    StringBuilder logLine = new StringBuilder();
+                                    byte[] uu;
+                                    byte[] bb = new byte[3];
+                                    for (int k = 0; k < raw.length(); k += 4) {
+                                        uu = raw.substring(k, k + 4).getBytes();
+
+                                        for (int kk = 0; kk < 4; kk++) {
+                                            if (uu[kk] == 0x20) {
+                                                uu[kk] = 0x2C;
+                                            }
+                                            uu[kk] = (byte) ((uu[kk] & ~0x40) ^ 0x20);
+                                        }
+
+                                        bb[0] = (byte) ((uu[0] & 0x3F) | ((uu[1] << 6) & 0xC0));
+                                        bb[1] = (byte) (((uu[1] >> 2) & 0x0F) | ((uu[2] << 4) & 0xF0));
+                                        bb[2] = (byte) (((uu[2] >> 4) & 0x03) | ((uu[3] << 2) & 0xFC));
+
+                                        logLine.append(String.format(
+                                                Locale.US, "%02X %02X %02X ",
+                                                bb[0],
+                                                bb[1],
+                                                bb[2]));
+                                    }
+                                    logLine.append("\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
+                                break;
+
+                            case SONDE_DECODER_MRZ:
+                                raw = safeStringFromStringArray(payload, 4, "");
+                                if (raw.length() > 94) {
+                                    StringBuilder logLine = new StringBuilder();
+                                    for (int i = 0; i < raw.length() / 2; i++) {
+                                        logLine.append(" ");
+                                        logLine.append(raw.substring(2 * i, 2 * (i + 1)));
+                                    }
+                                    logLine.append("\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
+                                break;
+
+                            case SONDE_DECODER_PILOT:
+                                //TODO
+                                break;
+                        }
                     }
 
                     if (infoType == 2) {    // T=2
