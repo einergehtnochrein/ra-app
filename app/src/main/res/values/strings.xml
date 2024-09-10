@@ -200,9 +200,7 @@
     <string name="pref_system_firmware_path">Search path for firmware</string>
     <string name="pref_system_rinex_url">URL for RINEX download</string>
     <string name="pref_system_predict_url">URL for Tawhiri Predictor</string>
-    <string name="pref_system_log_gpx">Save GPX tracks</string>
-    <string name="pref_system_log_gpx_path">Path for GPX tracks</string>
-    <string name="pref_system_log_gpx_persistence">Lifetime of GPX data</string>
+    <string name="pref_system_log_raw_frames">Log raw sonde frames</string>
 
     <!-- Notifications -->
     <string name="notify_map_not_found">Map %s not found</string>
