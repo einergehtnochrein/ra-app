@@ -9,7 +9,7 @@ import java.util.Locale
 
 class AboutDialog (val context: Context, private val info: RaComm.TargetInfo) {
     fun show() {
-        var appVersion = "-"
+        var appVersion: String? = "-"
 
         try {
             appVersion = context.packageManager.getPackageInfo(context.packageName, 0).versionName
