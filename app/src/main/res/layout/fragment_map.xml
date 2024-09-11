@@ -161,6 +161,8 @@
                 app:useExternalTheme='@{viewModel.useExternalTheme}'
                 app:externalThemePath='@{viewModel.externalThemePath}'
                 app:centerPosition='@{viewModel.centerPosition}'
+                app:northwest='@{viewModel.areaNorthWest}'
+                app:southeast='@{viewModel.areaSouthEast}'
                 app:myPosition='@{viewModel.myPosition}'
                 app:onlineTileSource='@{viewModel.onlineTileSource}'
                 app:cacheIndex='@{viewModel.onlineCacheIndex}'
@@ -236,6 +238,7 @@
                 android:contentDescription="@string/fragment_map_fab_goto_sonde_content_description"
                 android:src="@drawable/baseline_location_searching_24"
                 android:onClick='@{(view) -> viewModel.onFabGotoSondeClicked(view)}'
+                android:onLongClick='@{(view) -> viewModel.onFabGotoSondeLongClicked(view)}'
                 app:fabSize="normal"
                 />
 
