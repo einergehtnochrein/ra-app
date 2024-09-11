@@ -1,5 +1,8 @@
 package de.leckasemmel.sonde1.viewmodels;
 
+import static java.lang.Double.max;
+import static java.lang.Double.min;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -63,6 +66,8 @@ public class MapViewModel extends ViewModel
     public MutableLiveData<Double> frequency = new MutableLiveData<>();
 
     public MutableLiveData<LatLong> centerPosition = new MutableLiveData<>(new LatLong(48.13069,11.54594));
+    public MutableLiveData<LatLong> areaNorthWest = new MutableLiveData<>();
+    public MutableLiveData<LatLong> areaSouthEast = new MutableLiveData<>();
 
     public MutableLiveData<LatLong> myPosition = new MutableLiveData<>();
     public MutableLiveData<Double> myMslAltitude = new MutableLiveData<>();
@@ -382,6 +387,63 @@ public class MapViewModel extends ViewModel
             SondeListItem item = mFocusSonde.getValue();
             if (item != null) {
                 setCenterPosition(new LatLong(item.getLatitude(), item.getLongitude()));
+            }
+        }
+
+        return true;
+    }
+
+    public boolean onFabGotoSondeLongClicked(View view) {
+        // Zoom to area containing all of sonde, own position, and predicted landing position.
+
+        // Need a valid sonde
+        if (mFocusSonde != null) {
+            SondeListItem item = mFocusSonde.getValue();
+            if (item != null) {
+                // Determine sonde position
+                LatLong sondePos = new LatLong(item.getLatitude(), item.getLongitude());
+
+                // Determine own position (or null)
+                LatLong me = null;
+                if (myPosition != null) {
+                    me = myPosition.getValue();
+                }
+
+                // Determine predicted landing position (or null)
+                LatLong target = null;
+                if (item.descentWay != null) {
+                    SondeListItem.WayPoint point = item.descentWay.peekLast();
+                    if (point != null) {
+                        target = new LatLong(point.getLatitude(), point.getLongitude());
+                    }
+                }
+
+                // Only sonde position known? Just jump to that position at current zoom level.
+                if ((me == null) && (target == null)) {
+                    setCenterPosition(sondePos);
+                }
+                else {
+                    // Determine bounding box for all relevant positions
+                    double minLat = sondePos.latitude;
+                    double maxLat = minLat;
+                    double minLon = sondePos.longitude;
+                    double maxLon = minLon;
+                    if (me != null) {
+                        minLat = min(minLat, me.latitude);
+                        maxLat = max(maxLat, me.latitude);
+                        minLon = min(minLon, me.longitude);
+                        maxLon = max(maxLon, me.longitude);
+                    }
+                    if (target != null) {
+                        minLat = min(minLat, target.latitude);
+                        maxLat = max(maxLat, target.latitude);
+                        minLon = min(minLon, target.longitude);
+                        maxLon = max(maxLon, target.longitude);
+                    }
+
+                    areaNorthWest.setValue(new LatLong(maxLat, minLon));
+                    areaSouthEast.setValue(new LatLong(minLat, maxLon));
+                }
             }
         }
 

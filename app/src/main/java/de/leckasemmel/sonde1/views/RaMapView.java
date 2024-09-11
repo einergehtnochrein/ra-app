@@ -1,12 +1,17 @@
 package de.leckasemmel.sonde1.views;
 
+import static java.lang.Double.max;
+import static java.lang.Double.min;
+
 import android.content.Context;
 import android.util.AttributeSet;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.databinding.BindingAdapter;
 
+import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.datastore.MultiMapDataStore;
@@ -26,6 +31,7 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -216,6 +222,37 @@ public class RaMapView extends MapView {
             } else {
                 view.myPositionMarker.setVisible(false);
             }
+        }
+    }
+
+    @BindingAdapter(value = {"northwest", "southeast"}, requireAll = true)
+    static public void setVisibleAre(RaMapView view, LatLong northwest, LatLong southeast) {
+        if ((northwest != null) && (southeast != null)) {
+            // Determine number of tiles visible on screen
+            Dimension dimension = view.getModel().mapViewDimension.getDimension();
+            int tileSize = view.getModel().displayModel.getTileSize();
+            double xTiles = (double)dimension.width / (double)tileSize;
+            double yTiles = (double)dimension.height / (double)tileSize;
+
+            // Width and height of requested area (with some margin)
+            double latRange = 1.05 * (northwest.latitude - southeast.latitude);
+            double lonRange = 1.05 * (southeast.longitude - northwest.longitude);
+
+            // Determine zoom levels that include the requested range
+            double xZoom = Math.log(360.0 / (lonRange / xTiles)) / Math.log(2.0);
+            double yZoom = Math.log(170.1022 / (latRange / yTiles)) / Math.log(2.0);
+            double zoom = min(xZoom, yZoom);
+            zoom = max(zoom, 6.0);
+            zoom = min(zoom, 16.0);
+
+            MapPosition mapPosition = new MapPosition(
+                    new LatLong(
+                            (southeast.latitude + northwest.latitude) / 2.0,
+                            (southeast.longitude + northwest.longitude) / 2.0
+                    ),
+                    (byte)Math.floor(zoom)
+            );
+            view.getModel().mapViewPosition.setMapPosition(mapPosition);
         }
     }
 
