@@ -393,6 +393,39 @@ public class MapViewModel extends ViewModel
         return true;
     }
 
+    public boolean onFabGotoMyPositionLongClicked(View view) {
+        // Zoom to area containing sonde and own position.
+
+        // Need a valid sonde
+        if (mFocusSonde != null) {
+            SondeListItem item = mFocusSonde.getValue();
+            if (item != null) {
+                // Determine sonde position
+                LatLong sondePos = new LatLong(item.getLatitude(), item.getLongitude());
+
+                // Determine own position (or null)
+                LatLong me = null;
+                if (myPosition != null) {
+                    me = myPosition.getValue();
+                }
+
+                // My position must be known.
+                if (me != null) {
+                    // Determine bounding box for all relevant positions
+                    double minLat = min(sondePos.latitude, me.latitude);
+                    double maxLat = max(sondePos.latitude, me.latitude);
+                    double minLon = min(sondePos.longitude, me.longitude);
+                    double maxLon = max(sondePos.longitude, me.longitude);
+
+                    areaNorthWest.setValue(new LatLong(maxLat, minLon));
+                    areaSouthEast.setValue(new LatLong(minLat, maxLon));
+                }
+            }
+        }
+
+        return true;
+    }
+
     public boolean onFabGotoSondeClicked(View view) {
         if (mFocusSonde != null) {
             SondeListItem item = mFocusSonde.getValue();

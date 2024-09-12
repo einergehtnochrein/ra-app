@@ -228,6 +228,7 @@
                 android:contentDescription="@string/fragment_map_fab_goto_my_position_content_description"
                 android:src="@drawable/baseline_my_location_24"
                 android:onClick='@{(view) -> viewModel.onFabGotoMyPositionClicked(view)}'
+                android:onLongClick='@{(view) -> viewModel.onFabGotoMyPositionLongClicked(view)}'
                 android:alpha="0.75"
                 app:fabSize="normal"
                 />
