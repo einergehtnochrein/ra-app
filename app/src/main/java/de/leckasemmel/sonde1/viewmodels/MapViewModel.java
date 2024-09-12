@@ -97,20 +97,7 @@ public class MapViewModel extends ViewModel
     public void setCenterPosition(LatLong pos) { centerPosition.setValue(pos); }
     public void setMyPosition (LatLong pos) {
         myPosition.setValue(pos);
-
-        // Distance to focus sonde
-        double d = Double.NaN;
-        SondeListItem item = mFocusSonde.getValue();
-        if (item != null) {
-            SondeListItem.WayPoint point = item.position;
-            double lat = point.getLatitude();
-            double lon = point.getLongitude();
-            if (!Double.isNaN(lat) && !Double.isNaN(lon)) {
-                LatLong sondePosition = new LatLong(lat, lon);
-                d = sondePosition.sphericalDistance(myPosition.getValue());
-            }
-        }
-        distance.setValue(d);
+        updateDistance();
     }
     public void setMyMslAltitude (Double value) { myMslAltitude.setValue(value); }
     public void setUseHillShading (Boolean enable) { useHillShading.setValue(enable); }
@@ -143,6 +130,29 @@ public class MapViewModel extends ViewModel
         mRaPrefs = prefs;
     }
 
+    // Distance between focus sonde und myself
+    private void updateDistance() {
+        double d = Double.NaN;
+
+        // My position
+        LatLong me = null;
+        if (myPosition != null) {
+            me = myPosition.getValue();
+        }
+
+        SondeListItem item = mFocusSonde.getValue();
+        if ((item != null) && (me != null)) {
+            SondeListItem.WayPoint point = item.position;
+            double lat = point.getLatitude();
+            double lon = point.getLongitude();
+            if (!Double.isNaN(lat) && !Double.isNaN(lon)) {
+                LatLong sondePosition = new LatLong(lat, lon);
+                d = sondePosition.sphericalDistance(me);
+            }
+        }
+        distance.setValue(d);
+    }
+
     public void updateFromHeardList() {
         SondeListModel heardListModel = SondeListModel.getInstance();
 
@@ -170,6 +180,7 @@ public class MapViewModel extends ViewModel
             mFocusSonde.setValue(heardListModel.heardListFind(mFocusSonde.getValue().id));
         }
 
+        updateDistance();
         buildSondeLayers();
     }
 
