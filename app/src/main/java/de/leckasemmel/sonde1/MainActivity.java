@@ -977,5 +977,8 @@ public class MainActivity extends AppCompatActivity
                 mBleService.setMacAddresses(addresses);
             }
         }
+        else if (RaPreferences.KEY_PREF_SYSTEM_SHOW_RSSI_IN_MAP.equals(key)) {
+            mapViewModel.setShowRssi(mRaPrefs.getSystemShowRssiInMap());
+        }
     }
 }

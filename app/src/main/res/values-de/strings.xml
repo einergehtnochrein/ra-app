@@ -201,6 +201,7 @@
     <string name="pref_system_rinex_url">URL für RINEX-Download</string>
     <string name="pref_system_predict_url">URL for Tawhiri Predictor</string>
     <string name="pref_system_log_raw_frames">Empfangene Rohdaten speichern</string>
+    <string name="pref_system_show_rssi_in_map">RSSI in Kartenansicht</string>
 
     <!-- Notifications -->
     <string name="notify_map_not_found">Karte %s nicht gefunden</string>

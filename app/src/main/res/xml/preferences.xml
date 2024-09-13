@@ -114,5 +114,11 @@
             app:title="@string/pref_system_log_raw_frames"
             android:defaultValue="true"
             />
+
+        <SwitchPreferenceCompat
+            app:key="prefSystemShowRssiInMap"
+            app:title="@string/pref_system_show_rssi_in_map"
+            android:defaultValue="false"
+            />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

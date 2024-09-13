@@ -63,6 +63,7 @@ public class MapViewModel extends ViewModel
 
     public MutableLiveData<String> sondeSerial = new MutableLiveData<>();
     public MutableLiveData<Double> rssi = new MutableLiveData<>();
+    public MutableLiveData<Boolean> showRssi = new MutableLiveData<>(false);
     public MutableLiveData<Double> frequency = new MutableLiveData<>();
 
     public MutableLiveData<LatLong> centerPosition = new MutableLiveData<>(new LatLong(48.13069,11.54594));
@@ -93,6 +94,7 @@ public class MapViewModel extends ViewModel
     private RaPreferences mRaPrefs;
 
     public void setRssi (Double val) { rssi.setValue(val); }
+    public void setShowRssi (boolean val) { showRssi.setValue(val); }
     public void setFrequency (Double val) { frequency.setValue(val); }
     public void setCenterPosition(LatLong pos) { centerPosition.setValue(pos); }
     public void setMyPosition (LatLong pos) {

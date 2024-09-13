@@ -182,7 +182,7 @@
                 app:colorNumbersAccent="?attr/colorSmeterNumbersAccent"
                 app:level="@{viewModel.rssi}"
                 app:smeterStyle="@{3}"
-                android:visibility='@{Double.isNaN(viewModel.rssi) ? View.GONE : View.VISIBLE}'
+                android:visibility='@{viewModel.showRssi ? View.VISIBLE : View.GONE}'
                 />
 
             <LinearLayout

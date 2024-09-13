@@ -107,7 +107,9 @@ public class SMeterView extends View {
     public static void setLevel (SMeterView view, Double d) {
         float f = -999.0f;
         if (d != null) {
-            f = d.floatValue();
+            if (!d.isNaN()) {
+                f = d.floatValue();
+            }
         }
         view.dbm = f;
         view.invalidate();
