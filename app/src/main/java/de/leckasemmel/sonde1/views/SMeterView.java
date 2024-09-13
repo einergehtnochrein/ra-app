@@ -149,8 +149,10 @@ public class SMeterView extends View {
         String s;
         int alpha = isEnabled() ? 255 : 100;
 
-        Bitmap.Config config = Bitmap.Config.ARGB_8888;
-        mBitmap = Bitmap.createBitmap(width, height, config);
+        if (mBitmap == null) {
+            Bitmap.Config config = Bitmap.Config.ARGB_8888;
+            mBitmap = Bitmap.createBitmap(width, height, config);
+        }
         Canvas canvas = new Canvas(mBitmap);
 
         if (mMode == 3) {
@@ -549,6 +551,6 @@ public class SMeterView extends View {
         setMeasuredDimension(round(width), round(height));
 
         // Prepare a background bitmap for the proposed dimensions
-        createBackground(round(width), round(height));
+//        createBackground(round(width), round(height));
     }
 }
