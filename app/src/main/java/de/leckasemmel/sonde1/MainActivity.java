@@ -183,6 +183,10 @@ public class MainActivity extends AppCompatActivity
                             mBleService.send(raComm.makePingResponse(currentTime));
                         }, 1000);
                         break;
+                    case BLEService.BLE_CONNECTION_STATUS_RSSI_UPDATE:
+                        int rssi = intent.getIntExtra(BLEService.EXTRA_BLE_RSSI, -999);
+                        dashboardViewModel.setBleRssi(rssi);
+                        break;
                     default:
                         Log.d(TAG, "BLE link: unknown (" + status + ")");
                         break;
@@ -604,6 +608,8 @@ public class MainActivity extends AppCompatActivity
         processPreference(RaPreferences.KEY_PREF_MAP_PREDICT_BURST_ALTITUDE);
         processPreference(RaPreferences.KEY_PREF_MAP_PREDICT_LANDING_TIME_STYLE);
         processPreference(RaPreferences.KEY_PREF_BLUETOOTH_MAC_ADDRESSES);
+        processPreference(RaPreferences.KEY_PREF_SYSTEM_SHOW_RSSI_IN_MAP);
+        processPreference(RaPreferences.KEY_PREF_SYSTEM_SHOW_BLE_RSSI);
 
         raComm = new RaComm();
 
@@ -979,6 +985,9 @@ public class MainActivity extends AppCompatActivity
         }
         else if (RaPreferences.KEY_PREF_SYSTEM_SHOW_RSSI_IN_MAP.equals(key)) {
             mapViewModel.setShowRssi(mRaPrefs.getSystemShowRssiInMap());
+        }
+        else if (RaPreferences.KEY_PREF_SYSTEM_SHOW_BLE_RSSI.equals(key)) {
+            dashboardViewModel.setShowBleRssi(mRaPrefs.getSystemShowBleRssi());
         }
     }
 }

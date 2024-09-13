@@ -120,5 +120,11 @@
             app:title="@string/pref_system_show_rssi_in_map"
             android:defaultValue="false"
             />
+
+        <SwitchPreferenceCompat
+            app:key="prefSystemBleRssi"
+            app:title="@string/pref_system_show_ble_rssi"
+            android:defaultValue="false"
+            />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

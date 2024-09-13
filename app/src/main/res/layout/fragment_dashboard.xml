@@ -146,6 +146,32 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/bar_ble_rssi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/smeter"
+                    app:layout_constraintStart_toStartOf="@id/smeter"
+                    app:layout_constraintEnd_toEndOf="@id/smeter"
+                    android:clickable="false"
+                    android:backgroundTint="?attr/colorSmeterScale"
+                    android:indeterminate="false"
+                    android:max="1000"
+                    android:progress='@{1480 + 16 * viewModel.bleRssi}'
+                    android:visibility='@{viewModel.connected &amp;&amp; viewModel.showBleRssi ? View.VISIBLE : View.GONE}'
+                    />
+
+                <ImageView
+                    android:id="@+id/ble_rssi_icon"
+                    android:contentDescription="@string/fragment_dashboard_ble_rssi_icon_content_description"
+                    android:src="@{@drawable/baseline_bluetooth_24}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility='@{viewModel.connected &amp;&amp; viewModel.showBleRssi ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintStart_toStartOf="@id/smeter"
+                    app:layout_constraintTop_toBottomOf="@id/bar_ble_rssi"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

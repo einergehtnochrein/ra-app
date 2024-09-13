@@ -41,6 +41,8 @@ public class DashboardViewModel extends ViewModel {
     public MutableLiveData<Double[]> spectrumLevels = new MutableLiveData<>();
     public MutableLiveData<Boolean> monitor = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> monitorSupported = new MutableLiveData<>(false);
+    public MutableLiveData<Integer> bleRssi = new MutableLiveData<>();
+    public MutableLiveData<Boolean> showBleRssi = new MutableLiveData<>(false);
     private RaPreferences mRaPrefs;
 
 
@@ -91,6 +93,10 @@ public class DashboardViewModel extends ViewModel {
     }
     public void setMonitor (Boolean val) { monitor.setValue(val); }
     public void setMonitorSupported (Boolean val) { monitorSupported.setValue(val); }
+    public void setBleRssi (Integer value) { bleRssi.postValue(value); }
+    public void setShowBleRssi (Boolean val) {
+        showBleRssi.postValue(val);
+    }
 
     public boolean onSmeterLongClicked(View view) {
         Context context = view.getContext();
