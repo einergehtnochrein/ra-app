@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility='@{(item.sondeDecoder == SondeListItem.SondeDecoder.SONDE_DECODER_PSB3) ? View.VISIBLE : View.GONE}'
+        android:visibility='@{(item.sondeDecoder == SondeListItem.SondeDecoder.SONDE_DECODER_MTS01) ? View.VISIBLE : View.GONE}'
         >
 
         <TextView
