@@ -273,6 +273,7 @@
             <include app:item="@{item}" layout="@layout/heard_list_item_rs41"/>
             <include app:item="@{item}" layout="@layout/heard_list_item_mrz"/>
             <include app:item="@{item}" layout="@layout/heard_list_item_mts01"/>
+            <include app:item="@{item}" layout="@layout/heard_list_item_lms6"/>
         </LinearLayout>
     </LinearLayout>
 </layout>
