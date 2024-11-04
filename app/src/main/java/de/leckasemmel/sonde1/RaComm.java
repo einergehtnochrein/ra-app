@@ -647,6 +647,38 @@ public class RaComm {
                             case SONDE_DECODER_PILOT:
                                 //TODO
                                 break;
+
+                            case SONDE_DECODER_LMS6:
+                                raw = safeStringFromStringArray(payload, 5, "");
+                                if ((raw.length() % 4) == 0) {
+                                    StringBuilder logLine = new StringBuilder();
+                                    byte[] uu;
+                                    byte[] bb = new byte[3];
+                                    for (int k = 0; k < raw.length(); k += 4) {
+                                        uu = raw.substring(k, k + 4).getBytes();
+
+                                        for (int kk = 0; kk < 4; kk++) {
+                                            if (uu[kk] == 0x20) {
+                                                uu[kk] = 0x2C;
+                                            }
+                                            uu[kk] = (byte) ((uu[kk] & ~0x40) ^ 0x20);
+                                        }
+
+                                        bb[0] = (byte) ((uu[0] & 0x3F) | ((uu[1] << 6) & 0xC0));
+                                        bb[1] = (byte) (((uu[1] >> 2) & 0x0F) | ((uu[2] << 4) & 0xF0));
+                                        bb[2] = (byte) (((uu[2] >> 4) & 0x03) | ((uu[3] << 2) & 0xFC));
+
+                                        logLine.append(String.format(
+                                                Locale.US, "%02X %02X %02X ",
+                                                bb[0],
+                                                bb[1],
+                                                bb[2]));
+                                    }
+                                    logLine.append("\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
+                                break;
                         }
                     }
 

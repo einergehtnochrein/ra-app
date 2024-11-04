@@ -378,6 +378,7 @@ public class MainActivity extends AppCompatActivity
                     "imet_" + dateFormat.format(date) + "_" + String.format(Locale.US, "%6.0f", frequency / 1000.0) + ".txt";
             case SONDE_DECODER_IMET54 -> "imet54_" + name + ".txt";
             case SONDE_DECODER_JINYANG -> "jinyang_" + dateFormat.format(date) + ".txt";
+            case SONDE_DECODER_LMS6 -> "lms6_" + name + ".txt";
             case SONDE_DECODER_M10 ->
                     "m10_" + name.replace("-", "") + "_" + dateFormat.format(date) + ".txt";
             case SONDE_DECODER_M20 ->
