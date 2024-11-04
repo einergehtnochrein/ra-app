@@ -852,7 +852,9 @@ public class MainActivity extends AppCompatActivity
         mBinding.bottomNavigation.setSelectedItemId(R.id.action_map);
         mapViewModel.setFocusSonde(item);
         mapViewModel.updateFromHeardList();
-        mapViewModel.setCenterPosition(new LatLong(item.getLatitude(), item.getLongitude()));
+        if (!Double.isNaN(item.getLatitude()) && !Double.isNaN(item.getLongitude())) {
+            mapViewModel.setCenterPosition(new LatLong(item.getLatitude(), item.getLongitude()));
+        }
     }
 
     @Override

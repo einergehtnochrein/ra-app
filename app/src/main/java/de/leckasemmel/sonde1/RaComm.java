@@ -1,5 +1,7 @@
 package de.leckasemmel.sonde1;
 
+import static java.lang.Math.abs;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -308,7 +310,17 @@ public class RaComm {
 
             SondeListItem.WayPoint point = new SondeListItem.WayPoint();
             point.latitude = safeDoubleFromStringArray(payload, 5, Double.NaN);
+            if (!Double.isNaN(point.latitude)) {
+                if (abs(point.latitude) > 90.0) {
+                    point.latitude = Double.NaN;
+                }
+            }
             point.longitude = safeDoubleFromStringArray(payload, 6, Double.NaN);
+            if (!Double.isNaN(point.longitude)) {
+                if (abs(point.longitude) > 180.0) {
+                    point.longitude = Double.NaN;
+                }
+            }
             point.altitude = safeDoubleFromStringArray(payload, 7, Double.NaN);
             point.climbRate = safeDoubleFromStringArray(payload, 8, Double.NaN);
             point.timeStamp = new Date().getTime();
