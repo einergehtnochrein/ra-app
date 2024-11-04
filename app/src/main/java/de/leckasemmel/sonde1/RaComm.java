@@ -436,6 +436,9 @@ public class RaComm {
                                 partialItem.scalars.name = safeStringFromStringArray(payload, 4, "");
                                 partialItem.scalars.mts01_innerTemperature = safeDoubleFromStringArray(payload, 5, Double.NaN);
                                 break;
+                            case SONDE_DECODER_LMS6:
+                                partialItem.scalars.name = safeStringFromStringArray(payload, 4, "");
+                                break;
                         }
 
                         retVal = partialItem;
