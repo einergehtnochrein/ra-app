@@ -521,8 +521,10 @@ public class MapViewModel extends ViewModel
             Polyline way = new Polyline(paint, AndroidGraphicFactory.INSTANCE, true);
             List<LatLong> coordinates = way.getLatLongs();
             for (SondeListItem.WayPoint p : item.way) {
-                if (p.getLatitude() < 90) {
-                    coordinates.add(new LatLong(p.getLatitude(), p.getLongitude()));
+                if (!Double.isNaN(p.getLatitude()) && !Double.isNaN(p.getLongitude())) {
+                    if (p.getLatitude() < 90) {
+                        coordinates.add(new LatLong(p.getLatitude(), p.getLongitude()));
+                    }
                 }
             }
             layers.add(way);
