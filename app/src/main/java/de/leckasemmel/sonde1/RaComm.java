@@ -268,7 +268,8 @@ public class RaComm {
                 info.firmwareMaxLineLength = (info.firmwareMajor >= 21) ? 200 : 80;
                 info.firmwareMinor = safeIntFromStringArray(payload, 4, 0);
                 if (payload.length >= 6) {
-                    info.firmwareName = payload[5];
+                    info.firmwareName = "".equals(payload[5]) ? ""
+                            : String.format(Locale.US, " (%s)", payload[5]);
                 }
                 info.serialNumber = safeIntFromStringArray(payload, 6, -1);
                 info.bl652FirmwareVersion = safeIntFromStringArray(payload, 7, 0);
