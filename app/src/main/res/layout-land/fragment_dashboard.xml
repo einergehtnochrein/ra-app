@@ -72,7 +72,7 @@
                     android:showDividers="middle"
                     android:background="?attr/colorPrimary"
                     android:elevation="4dp"
-                    android:visibility="@{viewModel.mode == 2 ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{(viewModel.monitor || viewModel.mode == 2) ? View.GONE : View.VISIBLE}"
                     >
 
                     <TextView
