@@ -43,12 +43,13 @@ class AboutDialog (val context: Context, private val info: RaComm.TargetInfo) {
         }
 
         val message: String = String.format(
-            Locale.US, "%s %s\n%s %s.%s\n%s %s\n%s %s\n%s %s",
+            Locale.US, "%s %s\n%s %s.%s%s\n%s %s\n%s %s\n%s %s",
             context.getString(R.string.dialog_about_app_version),
             appVersion,
             context.getString(R.string.dialog_about_firmware_version),
             info.firmwareMajor,
             info.firmwareMinor,
+            info.firmwareName,
             "BL652 Firmware:",
             bl652FirmwareVersion,
             context.getString(R.string.dialog_about_power_script),

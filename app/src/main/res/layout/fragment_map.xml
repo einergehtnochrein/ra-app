@@ -171,12 +171,27 @@
                 app:showDebugLayers='@{viewModel.debugGrid}'
                 />
 
+            <de.leckasemmel.sonde1.views.SMeterView
+                android:id="@+id/map_smeter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                app:colorBackground="?attr/colorSmeterBackground"
+                app:colorScale="?attr/colorSmeterScale"
+                app:colorNumbers="?attr/colorSmeterNumbers"
+                app:colorNumbersAccent="?attr/colorSmeterNumbersAccent"
+                app:level="@{viewModel.rssi}"
+                app:smeterStyle="@{3}"
+                android:alpha="0.75"
+                android:visibility='@{viewModel.showRssi ? View.VISIBLE : View.GONE}'
+                />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@id/map_smeter"
                 >
 
                 <Button
@@ -186,6 +201,7 @@
                     android:text="@string/fragment_map_button_predict2"
                     android:textAllCaps="false"
                     android:onClick='@{(view) -> viewModel.onPredictClicked(view)}'
+                    android:alpha="0.75"
                     />
 
                 <TextView
@@ -198,6 +214,7 @@
                     android:textColor='?attr/colorLcdForeground'
                     android:background='?attr/colorLcdBackground'
                     android:onLongClick="@{(view) -> viewModel.onBurstAltitudeLongClicked(view)}"
+                    android:alpha="0.75"
                     />
             </LinearLayout>
 
@@ -206,12 +223,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
+                android:layout_below="@id/map_smeter"
                 android:contentDescription="@string/fragment_map_fab_goto_my_position_content_description"
                 android:src="@drawable/baseline_layers_24"
                 android:onClick='@{(view) -> viewModel.onFabNextMapClicked(view)}'
                 android:onLongClick='@{(view) -> viewModel.onFabNextMapLongClicked(view)}'
+                android:alpha="0.75"
                 app:fabSize="normal"
                 />
 
@@ -225,6 +243,8 @@
                 android:contentDescription="@string/fragment_map_fab_goto_my_position_content_description"
                 android:src="@drawable/baseline_my_location_24"
                 android:onClick='@{(view) -> viewModel.onFabGotoMyPositionClicked(view)}'
+                android:onLongClick='@{(view) -> viewModel.onFabGotoMyPositionLongClicked(view)}'
+                android:alpha="0.75"
                 app:fabSize="normal"
                 />
 
@@ -239,6 +259,7 @@
                 android:src="@drawable/baseline_location_searching_24"
                 android:onClick='@{(view) -> viewModel.onFabGotoSondeClicked(view)}'
                 android:onLongClick='@{(view) -> viewModel.onFabGotoSondeLongClicked(view)}'
+                android:alpha="0.75"
                 app:fabSize="normal"
                 />
 

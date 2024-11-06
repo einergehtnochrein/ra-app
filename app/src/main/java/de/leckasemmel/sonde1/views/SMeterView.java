@@ -47,6 +47,14 @@ public class SMeterView extends View {
     final float scaleMajorStrokeWidth = 3f/400f;        // Stroke width for scale arc (fraction of view height)
     final float scaleMinorStrokeWidth = 2f/400f;        // Stroke width for minor scale ticks (fraction of view height)
 
+    final float linear_xS9 = 0.5f;
+    final float linear_xMinDbm = 0.014f;
+    final float linear_scaleStrokeWidth = 0.1f;
+    final float linear_textStrokeWidth = 0.02f;
+    final float linear_textSize = 0.025f;                   // Fraction of view width
+    final float linear_barWidth = 0.017361f;                // Fraction of view width
+    final float linear_tickLength = 0.011111f;              // Fraction of view width
+
     private int mMode;
     private int mColorBackground;
     private int mColorScale;
@@ -89,7 +97,7 @@ public class SMeterView extends View {
     }
 
     public void setStyle (int style) {
-        if ((style >= 0) && (style <= 2)) {
+        if ((style >= 0) && (style <= 3)) {
             mMode = style;
             invalidate();
         }
@@ -99,7 +107,9 @@ public class SMeterView extends View {
     public static void setLevel (SMeterView view, Double d) {
         float f = -999.0f;
         if (d != null) {
-            f = d.floatValue();
+            if (!d.isNaN()) {
+                f = d.floatValue();
+            }
         }
         view.dbm = f;
         view.invalidate();
@@ -141,33 +151,44 @@ public class SMeterView extends View {
         String s;
         int alpha = isEnabled() ? 255 : 100;
 
-        Bitmap.Config config = Bitmap.Config.ARGB_8888;
-        mBitmap = Bitmap.createBitmap(width, height, config);
+        if (mBitmap == null) {
+            Bitmap.Config config = Bitmap.Config.ARGB_8888;
+            mBitmap = Bitmap.createBitmap(width, height, config);
+        }
         Canvas canvas = new Canvas(mBitmap);
 
-        // Background color
-        mPaint.setStrokeWidth(1f);
-        mPaint.setColor(mColorBackground);
-        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-//        canvas.drawRect(rBoundsI, mPaint);
+        if (mMode == 3) {
+            mPaint.setStrokeWidth(1f);
+            mPaint.setColor(mColorBackground);
+            mPaint.setAlpha(150);
+            mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        // Set reference point to the anchor
-        float anchorX = rBoundsI.centerX();
-        float anchorY = rBoundsI.bottom - (float)rBoundsI.height() * anchorPercent;
-        canvas.translate(anchorX, anchorY);
+            canvas.drawRect(rBoundsI, mPaint);
+        }
+        else {
+            // Background color
+            mPaint.setStrokeWidth(1f);
+            mPaint.setColor(mColorBackground);
+            mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        // Rectangle as bounds for drawing the scale arc
-        float scaleRadius = scalePercent * (float)rBoundsI.height();
-        rScaleF.set(-scaleRadius,-scaleRadius,scaleRadius,scaleRadius);
+            // Set reference point to the anchor
+            float anchorX = rBoundsI.centerX();
+            float anchorY = rBoundsI.bottom - (float) rBoundsI.height() * anchorPercent;
+            canvas.translate(anchorX, anchorY);
 
-        // Draw scale arc
-        mPaint.setStrokeWidth(scaleMajorStrokeWidth * rBoundsI.height());
-        mPaint.setColor(mColorScale);
-        mPaint.setAlpha(alpha);
-        mPaint.setStyle(Paint.Style.STROKE);
-        canvas.drawArc(rScaleF, 270.0f+minAngle, maxAngle - minAngle, false, mPaint);
+            // Rectangle as bounds for drawing the scale arc
+            float scaleRadius = scalePercent * (float) rBoundsI.height();
+            rScaleF.set(-scaleRadius, -scaleRadius, scaleRadius, scaleRadius);
 
-        if (mMode == 0) {
+            // Draw scale arc
+            mPaint.setStrokeWidth(scaleMajorStrokeWidth * rBoundsI.height());
+            mPaint.setColor(mColorScale);
+            mPaint.setAlpha(alpha);
+            mPaint.setStyle(Paint.Style.STROKE);
+            canvas.drawArc(rScaleF, 270.0f + minAngle, maxAngle - minAngle, false, mPaint);
+        }
+
+        if (mMode == 0) {   // S-Meter
             // Marker for every full S step from S9 downwards
             offset = 0;
             while (S9Dbm + offset >= minDbm) {
@@ -258,7 +279,7 @@ public class SMeterView extends View {
             canvas.drawText(s, startX - textBounds.width() / 2.0f, startY + textBounds.height() / 2.0f, mPaint);
         }
 
-        if (mMode == 1) {
+        if (mMode == 1) {   // dBµV
             // Marker for every 5 dB
             float minDbuv = minDbm + 106.9897f;
             float maxDbuv = maxDbm + 106.9897f;
@@ -315,7 +336,7 @@ public class SMeterView extends View {
             canvas.drawText(s, startX - textBounds.width() / 2.0f, startY + textBounds.height() / 2.0f, mPaint);
         }
 
-        if (mMode == 2) {
+        if (mMode == 2) {   // dBm
             // Marker for every 5 dB
             float lev2 = (float) (5.0 * ceil(minDbm / 5.0));
             while (lev2 <= maxDbm) {
@@ -369,6 +390,60 @@ public class SMeterView extends View {
             startY = -scalePercent * (float) rBoundsI.height() * (float) cos(keyText2Angle / 57.2958);
             canvas.drawText(s, startX - textBounds.width() / 2.0f, startY + textBounds.height() / 2.0f, mPaint);
         }
+
+        if (mMode == 3) {   // Linear gauge
+            // Marker for every full S step from S9 downwards
+            offset = 0;
+            while (S9Dbm + offset >= minDbm) {
+                // x position for this marker
+                float markerX = linear_xMinDbm + (S9Dbm + offset - minDbm) * (linear_xS9 - linear_xMinDbm) / (S9Dbm - minDbm);
+                markerX *= rBoundsI.width();
+                startY = linear_barWidth * rBoundsI.width();
+                stopY = (linear_barWidth + linear_tickLength) * rBoundsI.width();
+                mPaint.setStrokeWidth(linear_scaleStrokeWidth * rBoundsI.height());
+                mPaint.setColor(mColorScale);
+                canvas.drawLine(markerX, startY, markerX, stopY, mPaint);
+
+                s = String.format(Locale.US, "S%d", 9 + offset / 6);
+                mPaint.setColor(mColorNumbers);
+                mPaint.setStrokeWidth(linear_textStrokeWidth * rBoundsI.height());
+                mPaint.setTextSize(linear_textSize * rBoundsI.width());
+                mPaint.getTextBounds(s, 0, s.length(), textBounds);
+                mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+                float textX = markerX - 0.5f * textBounds.width();
+                float textY = 0.6f * rBoundsI.height() + textBounds.height();
+                canvas.drawText(s, textX, textY, mPaint);
+
+                offset -= 6;
+            }
+
+            // Marker for every 10 dB step from S9 upwards
+            offset = 10;
+            while (S9Dbm + offset < maxDbm) {
+                float markerX = linear_xS9 + offset * (1.0f - linear_xS9) / (maxDbm - S9Dbm);
+
+                markerX *= rBoundsI.width();
+                startY = linear_barWidth * rBoundsI.width();
+                stopY = (linear_barWidth + linear_tickLength) * rBoundsI.width();
+                mPaint.setStrokeWidth(linear_scaleStrokeWidth * rBoundsI.height());
+                mPaint.setColor(mColorNumbersAccent);
+                canvas.drawLine(markerX, startY, markerX, stopY, mPaint);
+
+                s = String.format(Locale.US, "%+d", offset);
+                mPaint.setColor(mColorNumbersAccent);
+                mPaint.setStrokeWidth(linear_textStrokeWidth * rBoundsI.height());
+                mPaint.setTextSize(linear_textSize * rBoundsI.width());
+                mPaint.getTextBounds(s, 0, s.length(), textBounds);
+                mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+                float textX = markerX - 0.5f * textBounds.width();
+                float textY = 0.6f * rBoundsI.height() + textBounds.height();
+                canvas.drawText(s, textX, textY, mPaint);
+
+                offset += 10;
+            }
+        }
     }
 
     @Override
@@ -377,44 +452,52 @@ public class SMeterView extends View {
 
         canvas.getClipBounds(rBoundsI);
 
-        float length;
-        float stopX, stopY;
-
         // Background
         createBackground(rBoundsI.width(), rBoundsI.height());
         canvas.drawBitmap(mBitmap, 0, 0, mPaint);
 
-        // Set reference point to the anchor
-        float anchorX = rBoundsI.centerX();
-        float anchorY = rBoundsI.bottom - (float)rBoundsI.height() * anchorPercent;
-        canvas.translate(anchorX, anchorY);
+        if (mMode == 3) {
+            float barLength = 0;
+            if (dbm > maxDbm) {
+                barLength = 1.0f;
+            } else if (dbm > S9Dbm) {
+                barLength = linear_xS9 + (dbm - S9Dbm) * (1.0f - linear_xS9) / (maxDbm - S9Dbm);
+            } else if (dbm > minDbm) {
+                barLength = (dbm - minDbm) / (S9Dbm - minDbm) * linear_xS9;
+            }
+            barLength *= rBoundsI.width();
 
-        if (isEnabled()) {
-
-            // Set reference point to the anchor
-//        float anchorX = rBoundsI.centerX();
-//        float anchorY = rBoundsI.bottom - (float)rBoundsI.height() * anchorPercent;
-//        canvas.translate(anchorX, anchorY);
-
-            // Find angle for pointer depending on current level
-            float angle = level2angle(dbm);
-
-            // Draw pointer
-            length = pointerLength * scalePercent * (float) rBoundsI.height();
-            stopX = length * (float) sin(angle / 57.2958);
-            stopY = -length * (float) cos(angle / 57.2958);
-            mPaint.setStrokeWidth(pointerStrokeWidth * rBoundsI.height());
+            mPaint.setStrokeWidth(1);
             mPaint.setColor(mColorScale);
-            canvas.drawLine(0, 0, stopX, stopY, mPaint);
+            mPaint.setStyle(Paint.Style.FILL);
+            canvas.drawRect(0, 0, barLength, linear_barWidth * rBoundsI.width(), mPaint);
+        }
+        else {
+            // Set reference point to the anchor
+            float anchorX = rBoundsI.centerX();
+            float anchorY = rBoundsI.bottom - (float) rBoundsI.height() * anchorPercent;
+            canvas.translate(anchorX, anchorY);
+
+            if (isEnabled()) {
+                float length;
+                float stopX, stopY;
+
+                // Find angle for pointer depending on current level
+                float angle = level2angle(dbm);
+
+                // Draw pointer
+                length = pointerLength * scalePercent * (float) rBoundsI.height();
+                stopX = length * (float) sin(angle / 57.2958);
+                stopY = -length * (float) cos(angle / 57.2958);
+                mPaint.setStrokeWidth(pointerStrokeWidth * rBoundsI.height());
+                mPaint.setColor(mColorScale);
+                canvas.drawLine(0, 0, stopX, stopY, mPaint);
+            }
         }
     }
 
-
     @Override
     protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec) {
-        // The optimum aspect ratio
-        final float optimumAspectRatio = 720f / 400f;
-
         // Find out what the system has planned
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -424,41 +507,52 @@ public class SMeterView extends View {
         float width;
         float height;
 
-        // Measure Width
-        if ((widthMode == MeasureSpec.EXACTLY) || (widthMode == MeasureSpec.AT_MOST)) {
-            // Use what is available
+        if (mMode == 3) {
             width = widthSize;
+            height = switch (heightMode) {
+                case MeasureSpec.EXACTLY -> heightSize;
+                case MeasureSpec.UNSPECIFIED -> widthSize / 20.0f;
+                case MeasureSpec.AT_MOST ->
+                    widthSize / 20.0f > heightSize ? heightSize : widthSize / 20.0f;
+                default -> throw new IllegalStateException("Unexpected heightMode: " + heightMode);
+            };
         }
         else {
-            // No constraints
-            width = 720f;
-        }
+            // The optimum aspect ratio
+            final float optimumAspectRatio = 720f / 400f;
 
-        // Measure Height
-        if ((heightMode == MeasureSpec.EXACTLY) || (heightMode == MeasureSpec.AT_MOST)) {
-            // Use what is available
-            height = heightSize;
-        }
-        else {
-            // No constraints
-            height = 400f;
-        }
+            // Measure Width
+            if ((widthMode == MeasureSpec.EXACTLY) || (widthMode == MeasureSpec.AT_MOST)) {
+                // Use what is available
+                width = widthSize;
+            } else {
+                // No constraints
+                width = 720f;
+            }
 
-        // Correct one of the parameters iin case we didn't get the desired aspect ratio
-        if (width / height < optimumAspectRatio) {
-            // Leave the width as is, and adapt the height
-            height = width / optimumAspectRatio;
-        }
-        else {
-            // Leave the height as is, and adapt the width
-            width = height * optimumAspectRatio;
+            // Measure Height
+            if ((heightMode == MeasureSpec.EXACTLY) || (heightMode == MeasureSpec.AT_MOST)) {
+                // Use what is available
+                height = heightSize;
+            } else {
+                // No constraints
+                height = 400f;
+            }
+
+            // Correct one of the parameters in case we didn't get the desired aspect ratio
+            if (width / height < optimumAspectRatio) {
+                // Leave the width as is, and adapt the height
+                height = width / optimumAspectRatio;
+            } else {
+                // Leave the height as is, and adapt the width
+                width = height * optimumAspectRatio;
+            }
         }
 
         // Inform system about our decision
-        setMeasuredDimension(Math.round(width), Math.round(height));
+        setMeasuredDimension(round(width), round(height));
 
         // Prepare a background bitmap for the proposed dimensions
-        createBackground(Math.round(width), Math.round(height));
+//        createBackground(round(width), round(height));
     }
 }
-

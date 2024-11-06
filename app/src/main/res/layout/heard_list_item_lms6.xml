@@ -15,20 +15,20 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/heard_group_mts01"
+        android:id="@+id/heard_group_lms6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility='@{(item.sondeDecoder == SondeListItem.SondeDecoder.SONDE_DECODER_MTS01) ? View.VISIBLE : View.GONE}'
+        android:visibility='@{(item.sondeDecoder == SondeListItem.SondeDecoder.SONDE_DECODER_LMS6) ? View.VISIBLE : View.GONE}'
         >
 
         <TextView
-            android:id="@+id/heard_item_temp_inner"
+            android:id="@+id/heard_item_frame_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@{HtmlCompat.fromHtml(String.format(Locale.US, @string/fragment_heard_label_mts01_temperature_inner, item.mts01InnerTemperature), HtmlCompat.FROM_HTML_MODE_LEGACY)}"
-            android:visibility='@{Double.isNaN(item.mts01InnerTemperature) ? View.GONE : View.VISIBLE}'
+            android:text='@{String.format(Locale.US, "#%d", item.frameNumber)}'
+            android:visibility='@{item.frameNumber > 0 ? View.VISIBLE : View.GONE}'
             />
     </LinearLayout>
 </layout>

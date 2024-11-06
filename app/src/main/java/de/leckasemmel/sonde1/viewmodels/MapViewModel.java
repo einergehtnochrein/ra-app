@@ -63,6 +63,7 @@ public class MapViewModel extends ViewModel
 
     public MutableLiveData<String> sondeSerial = new MutableLiveData<>();
     public MutableLiveData<Double> rssi = new MutableLiveData<>();
+    public MutableLiveData<Boolean> showRssi = new MutableLiveData<>(false);
     public MutableLiveData<Double> frequency = new MutableLiveData<>();
 
     public MutableLiveData<LatLong> centerPosition = new MutableLiveData<>(new LatLong(48.13069,11.54594));
@@ -93,24 +94,12 @@ public class MapViewModel extends ViewModel
     private RaPreferences mRaPrefs;
 
     public void setRssi (Double val) { rssi.setValue(val); }
+    public void setShowRssi (boolean val) { showRssi.setValue(val); }
     public void setFrequency (Double val) { frequency.setValue(val); }
     public void setCenterPosition(LatLong pos) { centerPosition.setValue(pos); }
     public void setMyPosition (LatLong pos) {
         myPosition.setValue(pos);
-
-        // Distance to focus sonde
-        double d = Double.NaN;
-        SondeListItem item = mFocusSonde.getValue();
-        if (item != null) {
-            SondeListItem.WayPoint point = item.position;
-            double lat = point.getLatitude();
-            double lon = point.getLongitude();
-            if (!Double.isNaN(lat) && !Double.isNaN(lon)) {
-                LatLong sondePosition = new LatLong(lat, lon);
-                d = sondePosition.sphericalDistance(myPosition.getValue());
-            }
-        }
-        distance.setValue(d);
+        updateDistance();
     }
     public void setMyMslAltitude (Double value) { myMslAltitude.setValue(value); }
     public void setUseHillShading (Boolean enable) { useHillShading.setValue(enable); }
@@ -143,6 +132,29 @@ public class MapViewModel extends ViewModel
         mRaPrefs = prefs;
     }
 
+    // Distance between focus sonde und myself
+    private void updateDistance() {
+        double d = Double.NaN;
+
+        // My position
+        LatLong me = null;
+        if (myPosition != null) {
+            me = myPosition.getValue();
+        }
+
+        SondeListItem item = mFocusSonde.getValue();
+        if ((item != null) && (me != null)) {
+            SondeListItem.WayPoint point = item.position;
+            double lat = point.getLatitude();
+            double lon = point.getLongitude();
+            if (!Double.isNaN(lat) && !Double.isNaN(lon)) {
+                LatLong sondePosition = new LatLong(lat, lon);
+                d = sondePosition.sphericalDistance(me);
+            }
+        }
+        distance.setValue(d);
+    }
+
     public void updateFromHeardList() {
         SondeListModel heardListModel = SondeListModel.getInstance();
 
@@ -170,6 +182,7 @@ public class MapViewModel extends ViewModel
             mFocusSonde.setValue(heardListModel.heardListFind(mFocusSonde.getValue().id));
         }
 
+        updateDistance();
         buildSondeLayers();
     }
 
@@ -382,6 +395,39 @@ public class MapViewModel extends ViewModel
         return true;
     }
 
+    public boolean onFabGotoMyPositionLongClicked(View view) {
+        // Zoom to area containing sonde and own position.
+
+        // Need a valid sonde
+        if (mFocusSonde != null) {
+            SondeListItem item = mFocusSonde.getValue();
+            if (item != null) {
+                // Determine sonde position
+                LatLong sondePos = new LatLong(item.getLatitude(), item.getLongitude());
+
+                // Determine own position (or null)
+                LatLong me = null;
+                if (myPosition != null) {
+                    me = myPosition.getValue();
+                }
+
+                // My position must be known.
+                if (me != null) {
+                    // Determine bounding box for all relevant positions
+                    double minLat = min(sondePos.latitude, me.latitude);
+                    double maxLat = max(sondePos.latitude, me.latitude);
+                    double minLon = min(sondePos.longitude, me.longitude);
+                    double maxLon = max(sondePos.longitude, me.longitude);
+
+                    areaNorthWest.setValue(new LatLong(maxLat, minLon));
+                    areaSouthEast.setValue(new LatLong(minLat, maxLon));
+                }
+            }
+        }
+
+        return true;
+    }
+
     public boolean onFabGotoSondeClicked(View view) {
         if (mFocusSonde != null) {
             SondeListItem item = mFocusSonde.getValue();
@@ -475,8 +521,10 @@ public class MapViewModel extends ViewModel
             Polyline way = new Polyline(paint, AndroidGraphicFactory.INSTANCE, true);
             List<LatLong> coordinates = way.getLatLongs();
             for (SondeListItem.WayPoint p : item.way) {
-                if (p.getLatitude() < 90) {
-                    coordinates.add(new LatLong(p.getLatitude(), p.getLongitude()));
+                if (!Double.isNaN(p.getLatitude()) && !Double.isNaN(p.getLongitude())) {
+                    if (p.getLatitude() < 90) {
+                        coordinates.add(new LatLong(p.getLatitude(), p.getLongitude()));
+                    }
                 }
             }
             layers.add(way);

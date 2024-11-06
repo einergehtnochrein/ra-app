@@ -74,6 +74,8 @@ public class BLEService extends Service {
             "de.leckasemmel.sonde1.ACTION_BLE_CONNECTION_STATUS_CHANGE";
     public final static String EXTRA_BLE_CONNECTION_STATUS =
             "de.leckasemmel.sonde1.EXTRA_BLE_CONNECTION_STATUS";
+    public final static String EXTRA_BLE_RSSI =
+            "de.leckasemmel.sonde1.EXTRA_BLE_RSSI";
     public final static String ACTION_DATA_AVAILABLE =
             "de.leckasemmel.sonde1.ACTION_DATA_AVAILABLE";
     public final static String EXTRA_RX_PAYLOAD =
@@ -87,6 +89,7 @@ public class BLEService extends Service {
     public final static int BLE_CONNECTION_STATUS_GATT_CONNECTED = 3;
     public final static int BLE_CONNECTION_STATUS_GATT_DISCONNECTED = 4;
     public final static int BLE_CONNECTION_STATUS_VSP_CONNECTED = 5;
+    public final static int BLE_CONNECTION_STATUS_RSSI_UPDATE = 6;
 
 
     public BLEService() {
@@ -207,6 +210,18 @@ public class BLEService extends Service {
         public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
             mMtuSize = mtu;
         }
+
+        @Override
+        public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
+            super.onReadRemoteRssi(gatt, rssi, status);
+
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                final Intent intent = new Intent(ACTION_BLE_CONNECTION_STATUS_CHANGE);
+                intent.putExtra(EXTRA_BLE_CONNECTION_STATUS, BLE_CONNECTION_STATUS_RSSI_UPDATE);
+                intent.putExtra(EXTRA_BLE_RSSI, rssi);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            }
+        }
     };
 
     private void broadcastUpdate(final BluetoothGattCharacteristic characteristic) {
@@ -242,11 +257,10 @@ public class BLEService extends Service {
                                     intent.putExtra(EXTRA_RX_PAYLOAD, rxCurrent);
                                     LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
-
                                     if (loggingActive && !rxCurrent.startsWith("#3,3,") && !rxCurrent.startsWith("#5,"))
                                         Log.d(TAG, "RX message = " + rxCurrent + " (" + checksum + ")");
 
-
+                                    mBluetoothGatt.readRemoteRssi();
                                 }
                             }
                             rxCurrent = "";

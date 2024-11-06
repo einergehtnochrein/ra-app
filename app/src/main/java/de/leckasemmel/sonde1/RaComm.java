@@ -1,5 +1,7 @@
 package de.leckasemmel.sonde1;
 
+import static java.lang.Math.abs;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -266,7 +268,8 @@ public class RaComm {
                 info.firmwareMaxLineLength = (info.firmwareMajor >= 21) ? 200 : 80;
                 info.firmwareMinor = safeIntFromStringArray(payload, 4, 0);
                 if (payload.length >= 6) {
-                    info.firmwareName = payload[5];
+                    info.firmwareName = "".equals(payload[5]) ? ""
+                            : String.format(Locale.US, " (%s)", payload[5]);
                 }
                 info.serialNumber = safeIntFromStringArray(payload, 6, -1);
                 info.bl652FirmwareVersion = safeIntFromStringArray(payload, 7, 0);
@@ -308,7 +311,17 @@ public class RaComm {
 
             SondeListItem.WayPoint point = new SondeListItem.WayPoint();
             point.latitude = safeDoubleFromStringArray(payload, 5, Double.NaN);
+            if (!Double.isNaN(point.latitude)) {
+                if (abs(point.latitude) > 90.0) {
+                    point.latitude = Double.NaN;
+                }
+            }
             point.longitude = safeDoubleFromStringArray(payload, 6, Double.NaN);
+            if (!Double.isNaN(point.longitude)) {
+                if (abs(point.longitude) > 180.0) {
+                    point.longitude = Double.NaN;
+                }
+            }
             point.altitude = safeDoubleFromStringArray(payload, 7, Double.NaN);
             point.climbRate = safeDoubleFromStringArray(payload, 8, Double.NaN);
             point.timeStamp = new Date().getTime();
@@ -423,6 +436,9 @@ public class RaComm {
                             case SONDE_DECODER_MTS01:
                                 partialItem.scalars.name = safeStringFromStringArray(payload, 4, "");
                                 partialItem.scalars.mts01_innerTemperature = safeDoubleFromStringArray(payload, 5, Double.NaN);
+                                break;
+                            case SONDE_DECODER_LMS6:
+                                partialItem.scalars.name = safeStringFromStringArray(payload, 4, "");
                                 break;
                         }
 
@@ -631,6 +647,38 @@ public class RaComm {
 
                             case SONDE_DECODER_PILOT:
                                 //TODO
+                                break;
+
+                            case SONDE_DECODER_LMS6:
+                                raw = safeStringFromStringArray(payload, 5, "");
+                                if ((raw.length() % 4) == 0) {
+                                    StringBuilder logLine = new StringBuilder();
+                                    byte[] uu;
+                                    byte[] bb = new byte[3];
+                                    for (int k = 0; k < raw.length(); k += 4) {
+                                        uu = raw.substring(k, k + 4).getBytes();
+
+                                        for (int kk = 0; kk < 4; kk++) {
+                                            if (uu[kk] == 0x20) {
+                                                uu[kk] = 0x2C;
+                                            }
+                                            uu[kk] = (byte) ((uu[kk] & ~0x40) ^ 0x20);
+                                        }
+
+                                        bb[0] = (byte) ((uu[0] & 0x3F) | ((uu[1] << 6) & 0xC0));
+                                        bb[1] = (byte) (((uu[1] >> 2) & 0x0F) | ((uu[2] << 4) & 0xF0));
+                                        bb[2] = (byte) (((uu[2] >> 4) & 0x03) | ((uu[3] << 2) & 0xFC));
+
+                                        logLine.append(String.format(
+                                                Locale.US, "%02X %02X %02X ",
+                                                bb[0],
+                                                bb[1],
+                                                bb[2]));
+                                    }
+                                    logLine.append("\n");
+
+                                    retVal = new RawFrameData(partialItem.id, logLine.toString());
+                                }
                                 break;
                         }
                     }

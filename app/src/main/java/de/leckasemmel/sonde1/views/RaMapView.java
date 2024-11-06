@@ -235,8 +235,8 @@ public class RaMapView extends MapView {
             double yTiles = (double)dimension.height / (double)tileSize;
 
             // Width and height of requested area (with some margin)
-            double latRange = 1.05 * (northwest.latitude - southeast.latitude);
-            double lonRange = 1.05 * (southeast.longitude - northwest.longitude);
+            double latRange = 1.1 * (northwest.latitude - southeast.latitude);
+            double lonRange = 1.1 * (southeast.longitude - northwest.longitude);
 
             // Determine zoom levels that include the requested range
             double xZoom = Math.log(360.0 / (lonRange / xTiles)) / Math.log(2.0);
@@ -252,7 +252,7 @@ public class RaMapView extends MapView {
                     ),
                     (byte)Math.floor(zoom)
             );
-            view.getModel().mapViewPosition.setMapPosition(mapPosition);
+            view.getModel().mapViewPosition.setMapPosition(mapPosition, true);
         }
     }
 

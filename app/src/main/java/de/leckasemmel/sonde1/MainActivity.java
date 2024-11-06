@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity
                         dashboardViewModel.setConnected(false);
                         dashboardViewModel.setLastWayPoint(null);
                         dashboardViewModel.setSondeSerial("");
+                        mapViewModel.setRssi(Double.NaN);
                         mainViewModel.setRaName(null);
                         break;
                     case BLEService.BLE_CONNECTION_STATUS_GATT_CONNECTED:
@@ -181,6 +182,10 @@ public class MainActivity extends AppCompatActivity
                             long currentTime = calendar.getTimeInMillis() / 1000L;
                             mBleService.send(raComm.makePingResponse(currentTime));
                         }, 1000);
+                        break;
+                    case BLEService.BLE_CONNECTION_STATUS_RSSI_UPDATE:
+                        int rssi = intent.getIntExtra(BLEService.EXTRA_BLE_RSSI, -999);
+                        dashboardViewModel.setBleRssi(rssi);
                         break;
                     default:
                         Log.d(TAG, "BLE link: unknown (" + status + ")");
@@ -270,6 +275,7 @@ public class MainActivity extends AppCompatActivity
                         } else if (parsed.getClass() == RaComm.Rssi.class) {
                             double rssi = ((RaComm.Rssi) parsed).rssi;
                             dashboardViewModel.setRssi(rssi);
+                            mapViewModel.setRssi(rssi);
                         } else if (parsed.getClass() == RaComm.RaBatteryVoltage.class) {
                             double vbat = ((RaComm.RaBatteryVoltage) parsed).vbat;
                             dashboardViewModel.setBatteryVoltage(vbat);
@@ -372,6 +378,7 @@ public class MainActivity extends AppCompatActivity
                     "imet_" + dateFormat.format(date) + "_" + String.format(Locale.US, "%6.0f", frequency / 1000.0) + ".txt";
             case SONDE_DECODER_IMET54 -> "imet54_" + name + ".txt";
             case SONDE_DECODER_JINYANG -> "jinyang_" + dateFormat.format(date) + ".txt";
+            case SONDE_DECODER_LMS6 -> "lms6_" + name + ".txt";
             case SONDE_DECODER_M10 ->
                     "m10_" + name.replace("-", "") + "_" + dateFormat.format(date) + ".txt";
             case SONDE_DECODER_M20 ->
@@ -602,6 +609,8 @@ public class MainActivity extends AppCompatActivity
         processPreference(RaPreferences.KEY_PREF_MAP_PREDICT_BURST_ALTITUDE);
         processPreference(RaPreferences.KEY_PREF_MAP_PREDICT_LANDING_TIME_STYLE);
         processPreference(RaPreferences.KEY_PREF_BLUETOOTH_MAC_ADDRESSES);
+        processPreference(RaPreferences.KEY_PREF_SYSTEM_SHOW_RSSI_IN_MAP);
+        processPreference(RaPreferences.KEY_PREF_SYSTEM_SHOW_BLE_RSSI);
 
         raComm = new RaComm();
 
@@ -844,7 +853,9 @@ public class MainActivity extends AppCompatActivity
         mBinding.bottomNavigation.setSelectedItemId(R.id.action_map);
         mapViewModel.setFocusSonde(item);
         mapViewModel.updateFromHeardList();
-        mapViewModel.setCenterPosition(new LatLong(item.getLatitude(), item.getLongitude()));
+        if (!Double.isNaN(item.getLatitude()) && !Double.isNaN(item.getLongitude())) {
+            mapViewModel.setCenterPosition(new LatLong(item.getLatitude(), item.getLongitude()));
+        }
     }
 
     @Override
@@ -967,12 +978,19 @@ public class MainActivity extends AppCompatActivity
                 dashboardViewModel.setLastWayPoint(null);
                 dashboardViewModel.setSondeSerial("");
                 dashboardViewModel.setFrequency(Double.NaN);
+                mapViewModel.setRssi(Double.NaN);
                 mainViewModel.setRaName(null);
 
                 Set<String> macs = mRaPrefs.getMacSet();
                 String[] addresses = macs.toArray(new String[0]);
                 mBleService.setMacAddresses(addresses);
             }
+        }
+        else if (RaPreferences.KEY_PREF_SYSTEM_SHOW_RSSI_IN_MAP.equals(key)) {
+            mapViewModel.setShowRssi(mRaPrefs.getSystemShowRssiInMap());
+        }
+        else if (RaPreferences.KEY_PREF_SYSTEM_SHOW_BLE_RSSI.equals(key)) {
+            dashboardViewModel.setShowBleRssi(mRaPrefs.getSystemShowBleRssi());
         }
     }
 }
