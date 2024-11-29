@@ -39,8 +39,6 @@ public class BLEService extends Service {
     private final static String TAG = BLEService.class.getName();
     private boolean loggingActive = false;
 
-    private int mStartId;
-
     private String rxCurrent = "";
     private String txCurrent;
     private final LinkedList<String> txFIFO = new LinkedList<>();
@@ -56,6 +54,7 @@ public class BLEService extends Service {
     private BluetoothGattCharacteristic mVspCharCts;
     private boolean clearToSend = true;
     private int mMtuSize = 20;
+    private int bleRssiThrottle;
 
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
@@ -260,7 +259,10 @@ public class BLEService extends Service {
                                     if (loggingActive && !rxCurrent.startsWith("#3,3,") && !rxCurrent.startsWith("#5,"))
                                         Log.d(TAG, "RX message = " + rxCurrent + " (" + checksum + ")");
 
-                                    mBluetoothGatt.readRemoteRssi();
+                                    if (++bleRssiThrottle > 10) {
+                                        bleRssiThrottle = 0;
+                                        mBluetoothGatt.readRemoteRssi();
+                                    }
                                 }
                             }
                             rxCurrent = "";
@@ -304,8 +306,6 @@ public class BLEService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mStartId = startId;
-
         return super.onStartCommand(intent, flags, startId);
     }
 
