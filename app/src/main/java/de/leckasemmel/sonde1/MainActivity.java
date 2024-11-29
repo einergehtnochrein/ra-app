@@ -583,6 +583,48 @@ public class MainActivity extends AppCompatActivity
                 myEdit.apply();
             }
         });
+        mapViewModel.navLatLong.observe(this, value -> {
+            // What application do we expect to handle the intent?
+            Uri uri = switch (mRaPrefs.getMapNavigationAppCompatibility()) {
+                case 1 ->    // Plain Android "geo:"
+                        Uri.parse("geo:"
+                                + value.latitude
+                                + ","
+                                + value.longitude);
+                case 2 ->     // Google Maps
+                        Uri.parse("google.navigation:q="
+                                + value.latitude
+                                + ","
+                                + value.longitude);
+                case 5 ->     // OsmAnd
+/* Listed on https://osmand.net/docs/technical/algorithms/osmand-intents,
+   but apparently unsupported
+                        Uri.parse("https://osmand.net/map/"
+                                + "?start=50.0,9.0"
+                                + "&finish="
+                                + value.latitude
+                                + ","
+                                + value.longitude
+                                + "&profile=car"
+                                + "&pin=50.2,9.2"
+                                + "#11/50.1/9.1"
+                                );
+*/
+                        Uri.parse("google.navigation:q="
+                                + value.latitude
+                                + ","
+                                + value.longitude);
+                default -> null;
+            };
+
+            if (uri != null) {
+                Log.w(TAG, uri.toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
 
         heardModel = SondeListModel.getInstance();
 
