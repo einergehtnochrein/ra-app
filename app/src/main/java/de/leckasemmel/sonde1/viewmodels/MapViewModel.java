@@ -5,8 +5,10 @@ import static java.lang.Double.min;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.Html;
 import android.text.InputType;
 import android.text.Spanned;
@@ -23,6 +25,7 @@ import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.datastore.MultiMapDataStore;
@@ -51,6 +54,8 @@ import de.leckasemmel.sonde1.R;
 import de.leckasemmel.sonde1.RaPreferences;
 import de.leckasemmel.sonde1.SondeListItem;
 import de.leckasemmel.sonde1.model.SondeListModel;
+import de.leckasemmel.sonde1.views.MapsforgeMarkerAction;
+import de.leckasemmel.sonde1.views.MapsforgeTappableMarker;
 
 
 public class MapViewModel extends ViewModel
@@ -92,6 +97,7 @@ public class MapViewModel extends ViewModel
     public MutableLiveData<Boolean> debugGrid = new MutableLiveData<>(false);
     private int onlineMapSelector = -1;
     private RaPreferences mRaPrefs;
+    public MutableLiveData<LatLong> navLatLong = new MutableLiveData<>();
 
     public void setRssi (Double val) { rssi.setValue(val); }
     public void setShowRssi (boolean val) { showRssi.setValue(val); }
@@ -568,8 +574,24 @@ public class MapViewModel extends ViewModel
                     double latitude = point.getLatitude();
                     double longitude = point.getLongitude();
                     if (!Double.isNaN(latitude) && !Double.isNaN(longitude)) {
-                        LatLong position = new LatLong(latitude, longitude);
-                        layers.add(new Marker(position, AndroidGraphicFactory.convertToBitmap(drawablePredictionPos), 0, -48));
+                        MapsforgeTappableMarker destinationMarker = new MapsforgeTappableMarker(
+                                new LatLong(latitude, longitude),
+                                drawablePredictionPos,
+                                0, -48);
+                        destinationMarker.setTapAction(new MapsforgeMarkerAction() {
+                            LatLong markerLatLong;
+
+                            @Override
+                            public void setTapParameters(LatLong markerLatLong) {
+                                this.markerLatLong = markerLatLong;
+                            }
+
+                            @Override
+                            public void run() {
+                                navLatLong.postValue(markerLatLong);
+                            }
+                        });
+                        layers.add(destinationMarker);
                     }
                 }
             }
