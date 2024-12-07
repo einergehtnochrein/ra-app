@@ -23,6 +23,7 @@ public class RaPreferences {
     public final static String KEY_PREF_MAP_HGT_PATH = "prefMapHgtPath";
     public final static String KEY_PREF_MAP_PREDICT_BURST_ALTITUDE = "prefMapPredictBurstAltitude";
     public final static String KEY_PREF_MAP_PREDICT_LANDING_TIME_STYLE = "prefMapPredictLandingTimeStyle";
+    public final static String KEY_PREF_MAP_NAVIGATION_APP_COMPATIBILITY = "prefMapNavigationAppCompatibility";
     public final static String KEY_PREF_LOOK_SMETER_STYLE = "prefLookSmeterStyle";
     public final static String KEY_PREF_LOOK_THEME = "prefLookTheme";
     public final static String KEY_PREF_SYSTEM_FIRMWARE_PATH = "prefSystemFirmwarePath";
@@ -129,6 +130,7 @@ public class RaPreferences {
         setStringDefault(KEY_PREF_MAP_HGT_PATH, raBase + "/hgt");
         setStringDefault(KEY_PREF_MAP_PREDICT_BURST_ALTITUDE, "30000");
         setStringDefault(KEY_PREF_MAP_PREDICT_LANDING_TIME_STYLE, "0");
+        setStringDefault(KEY_PREF_MAP_NAVIGATION_APP_COMPATIBILITY, "0");
 
         setStringDefault(KEY_PREF_SYSTEM_FIRMWARE_PATH, raBase + "/firmware");
         setStringDefault(KEY_PREF_SYSTEM_RINEX_URL, "https://ra.leckasemmel.de/rinex");
@@ -247,6 +249,15 @@ public class RaPreferences {
 
     public String getMapPredictLandingTimeStyle() {
         return mSharedPref.getString(KEY_PREF_MAP_PREDICT_LANDING_TIME_STYLE, "0");
+    }
+    public int getMapNavigationAppCompatibility() {
+        String s = mSharedPref.getString(KEY_PREF_MAP_NAVIGATION_APP_COMPATIBILITY, "0");
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            Log.w(TAG, e.toString());
+        }
+        return 0;
     }
 
     public boolean getMapOnline1Enable() {

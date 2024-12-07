@@ -70,6 +70,14 @@
             android:defaultValue="0"
             />
 
+        <ListPreference
+            android:key="prefMapNavigationAppCompatibility"
+            android:title="@string/pref_map_navigation_app_compatibility"
+            android:entries="@array/map_map_navigation_app_compatibility_name"
+            android:entryValues="@array/map_map_navigation_app_compatibility_values"
+            android:defaultValue="0"
+            />
+
         <Preference
             android:title='@string/pref_map_online_maps'
             android:icon="@drawable/baseline_layers_24"
